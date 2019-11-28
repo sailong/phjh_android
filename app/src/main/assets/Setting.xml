@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<QDS>
+    <AppSetting>
+        <Version>6.1.3009</Version>
+        <AutoShutdown Enable="0" Time="19:00" />
+        <QuitPassword Enable="1" Password="123" />
+        <CounterSetting>
+            <Counter CounterNo="Default" TemplateID="1" />
+            <Counter CounterNo="0" TemplateID="2" Title="龙华区行政服务大厅" ServiceName="" CounterAlias="" TipText="温馨提示：请保持安静！" />
+            <Counter CounterNo="1" TemplateID="1" Title="①号窗口" ServiceName="内科诊室①" CounterAlias="综合业务" TipText="温馨提示：请保持安静！" />
+            <Counter CounterNo="2" TemplateID="1" Title="深圳市第一人民医院" ServiceName="内科诊室②" CounterAlias="" TipText="温馨提示：请保持安静！" />
+            <Counter CounterNo="3" TemplateID="3" Title="深圳市第一人民医院" ServiceName="内科诊室②" CounterAlias="" TipText="温馨提示：请保持安静！" />
+            <Counter CounterNo="4" TemplateID="4" Title="深圳市办证服务大厅" ServiceName="领表窗口" CounterAlias="" TipText="请耐心等候" />
+            <Counter CounterNo="5" TemplateID="5" Title="深圳市公安局出入境管理支队" ServiceName="" CounterAlias="" TipText="" />
+        </CounterSetting>
+        <Templates>
+            <Template ID="1" Description="横向模板1">
+                <Resolution Width="1920" Height="1080" />
+                <Background type="html" Name="HospHorizontal1.html" Color="" ModifyDate="2018-11-30 10:56:39" />
+                <BgFileList Directory="\HospHorizontal1" Count="10" ModifyDate="2018-11-30 10:56:39" Names="content.jpg;curcallTitle.png;curcallVale.png;footer.jpg;header.jpg;json2.js;nextCallTitle.png;nextCallValue.png;style.css;public.js" />
+                <Media type="2" Directory="\" Count="3" ModifyDate="2018-12-28 16:37:35" UpdateEvenEmpty="0" Switch="1" Interval="10" Animation="1" />
+                <CallTextModel Enable="0" />
+                <CallPopupWindow Enable="0" />
+            </Template>
+            <Template ID="2" Description="综合显示屏1">
+                <Resolution Width="1920" Height="1080" />
+                <Background type="html" Name="MultipleDisplay1.html" Color="" ModifyDate="2018-11-30 10:56:39" />
+                <BgFileList Directory="\MultipleDisplay1" Count="6" ModifyDate="2018-11-30 10:56:39" Names="content.jpg;footer.jpg;header.jpg;json2.js;style.css;public.js" />
+                <Media type="2" Directory="\" Count="3" ModifyDate="2018-12-28 16:37:35" UpdateEvenEmpty="0" Switch="1" Interval="10" Animation="1" />
+                <CallTextModel Enable="1" Text="请 {TicketNo.} 号到 {CounterNo.} 号窗口" TicketLen="4" CounterLen="2" HistoryCallShow="UpToBottom" />
+                <CallPopupWindow Enable="0" Duration="15" Text="请 {TicketNo.} 号到 {CounterNo.} 号窗口" />
+            </Template>
+            <Template ID="3" Description="医院候诊区模板1">
+                <Resolution Width="1920" Height="1080" />
+                <Background type="html" Name="HospWaitingArea1.html" Color="" ModifyDate="2018-11-30 10:56:39" />
+                <BgFileList Directory="\HospWaitingArea1" Count="3" ModifyDate="2018-11-30 10:56:39" Names="json2.js;style.css;public.js" />
+                <Media type="0" Directory="\" Count="3" ModifyDate="2018-12-28 16:37:35" UpdateEvenEmpty="0" Switch="1" Interval="10" Animation="1" />
+                <CallTextModel Enable="0" />
+                <CallPopupWindow Enable="0" Duration="15" Text="请 {TicketNo.} 号到 {CounterNo.} 号窗口" />
+            </Template>
+            <Template ID="4" Description="员工信息模板1">
+                <Resolution Width="1920" Height="1080" />
+                <Background type="html" Name="StaffHorizontal1.html" Color="" ModifyDate="2018-11-30 10:56:39" />
+                <BgFileList Directory="\StaffHorizontal1" Count="17" ModifyDate="2019-03-19 15:10:49" Names="content.jpg;curcallTitle.png;curcallVale.png;footer.jpg;header.jpg;json2.js;NameLeft.jpg;NameRight.jpg;nextCallTitle.png;nextCallValue.png;NumLeft.jpg;NumRight.jpg;style.css;public.js;TitleLeft.jpg;TitleRight.jpg;logo.jpg" />
+                <Media type="1" Directory="\" Count="3" ModifyDate="2018-12-28 16:37:35" UpdateEvenEmpty="0" Switch="1" Interval="10" Animation="1" />
+                <CallTextModel Enable="0" />
+                <CallPopupWindow Enable="0" Duration="15" Text="请 {TicketNo.} 号到 {CounterNo.} 号窗口" />
+            </Template>
+            <Template ID="5" Description="员工信息模版2">
+                <Resolution Width="1920" Height="1080" />
+                <Background type="html" Name="StaffHorizontal2.html" Color="" ModifyDate="2019-01-07 15:18:52" />
+                <BgFileList Directory="\StaffHorizontal2" Count="4" ModifyDate="2019-01-07 17:14:00" Names="guihui.png;json2.js;style.css;public.js" />
+                <Media type="1" Directory="\" Count="3" ModifyDate="2018-12-28 16:37:35" UpdateEvenEmpty="0" Switch="1" Interval="10" Animation="1" />
+                <CallTextModel Enable="0" />
+                <CallPopupWindow Enable="0" Duration="15" Text="请 {TicketNo.} 号到 {CounterNo.} 号窗口" />
+            </Template>
+            <Template ID="6" Description="窗口横向模板2">
+                <Resolution Width="1920" Height="1080" />
+                <Background type="html" Name="PoliticsHorizontal1.html" Color="" ModifyDate="2019-01-08 14:22:24" />
+                <BgFileList Directory="\PoliticsHorizontal1" Count="3" ModifyDate="2019-01-08 14:22:24" Names="json2.js;style.css;public.js" />
+                <Media type="0" Directory="\" Count="3" ModifyDate="2018-12-28 16:37:35" UpdateEvenEmpty="0" Switch="1" Interval="10" Animation="1" />
+                <CallTextModel Enable="0" />
+                <CallPopupWindow Enable="0" Duration="15" Text="请 {TicketNo.} 号到 {CounterNo.} 号窗口" />
+            </Template>
+            <Template ID="7" Description="员工信息模版3">
+                <Resolution Width="1920" Height="1080" />
+                <Background type="html" Name="StaffHorizontal3.html" Color="" ModifyDate="2019-03-19 15:10:48" />
+                <BgFileList Directory="\StaffHorizontal3" Count="7" ModifyDate="2019-03-19 15:10:48" Names="json2.js;style.css;public.js;left.png;right_Buttom.png;right_top.png;top.png" />
+                <Media type="1" Directory="\" Count="3" ModifyDate="2018-12-28 16:37:35" UpdateEvenEmpty="0" Switch="1" Interval="10" Animation="1" />
+                <CallTextModel Enable="0" />
+                <CallPopupWindow Enable="0" Duration="15" Text="请 {TicketNo.} 号到 {CounterNo.} 号窗口" />
+            </Template>
+        </Templates>
+    </AppSetting>
+    <InitData>
+        <NextCallList LimitPerService="10">
+            <Service Order="1" ServiceNo="1" ServiceType="A" ServiceName="业务一" />
+            <Service Order="2" ServiceNo="2" ServiceType="B" ServiceName="业务二" />
+            <Service Order="3" ServiceNo="3" ServiceType="C" ServiceName="业务三" />
+        </NextCallList>
+    </InitData>
+</QDS>

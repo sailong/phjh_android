@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/rlyt_all"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/bg_default"
+                android:orientation="vertical">
+
+    <WebView
+        android:id="@+id/mWebView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <!--医院竖屏模板1-->
+    <include layout="@layout/layout_template_hospial_vscreen_1"/>
+
+    <!--横向模板1-->
+    <include layout="@layout/layout_template_service_hscreen_1"/>
+
+    <!--医院竖屏模板2-->
+    <include layout="@layout/layout_template_hospial_vscreen_2"/>
+
+    <!--行政窗口屏竖屏模板-->
+    <include layout="@layout/layout_template_hospial_vscreen_3"/>
+
+    <!--窗口横屏模板2-->
+    <include layout="@layout/layout_template_service_hscreen_2"/>
+
+    <!--医院窗口横屏模板3-->
+    <include layout="@layout/layout_template_service_hscreen_3"/>
+
+    <!--窗口横屏模板4-->
+    <include layout="@layout/layout_template_service_hscreen_4"/>
+
+    <!--多媒体区域-->
+    <RelativeLayout
+        android:id="@+id/rlyt_media_display_area"
+        android:layout_width="550px"
+        android:layout_height="460px"
+        android:layout_marginLeft="700px"
+        android:layout_marginTop="155px"
+        android:background="@color/black_color"
+        android:visibility="gone">
+
+        <com.bigkoo.convenientbanner.ConvenientBanner
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/convenientBanner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:visibility="visible"
+            app:canLoop="true"/>
+
+        <com.qianjinzhe.lcd_display.ijkplayer.CustomMediaPlayer
+            android:id="@+id/mMediaPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@color/black_color"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+    <!--头像-->
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_150"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/person"
+        android:visibility="gone"/>
+
+</RelativeLayout>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?><!--输入密码弹窗-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rlyt_input_pwd_alert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="@dimen/dp_450"
+            android:layout_height="wrap_content"
+            android:background="@drawable/frame_dialog"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_40"
+                android:layout_marginTop="@dimen/dp_40"
+                android:gravity="center"
+                android:text="@string/input_pwd"
+                android:textColor="@color/black_color"
+                android:textSize="@dimen/sp_24"/>
+
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_55"
+                android:layout_marginLeft="@dimen/dp_40"
+                android:layout_marginRight="@dimen/dp_40"
+                android:background="@drawable/frame_pwd_input"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:inputType="textPassword"
+                android:nextFocusDown="@+id/btn_confirm_pwd"
+                android:nextFocusLeft="@+id/btn_confirm_pwd"
+                android:nextFocusRight="@+id/btn_confirm_pwd"
+                android:nextFocusUp="@+id/btn_confirm_pwd"
+                android:singleLine="true"
+                android:textColor="@color/black_color"
+                android:textCursorDrawable="@drawable/edittext_color_cursor"
+                android:textSize="@dimen/sp_24"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_55"
+                android:layout_marginBottom="@dimen/dp_40"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:layout_marginRight="@dimen/dp_30"
+                android:layout_marginTop="@dimen/dp_40"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/btn_confirm_pwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/frame_dialog_btn"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center"
+                    android:nextFocusDown="@+id/et_password"
+                    android:nextFocusLeft="@+id/et_password"
+                    android:nextFocusRight="@+id/btn_cancel_pwd"
+                    android:nextFocusUp="@+id/et_password"
+                    android:text="@string/confirm_text"
+                    android:textColor="@color/black_color"
+                    android:textSize="@dimen/sp_22"/>
+
+                <View
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/btn_cancel_pwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/frame_dialog_btn"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center"
+                    android:nextFocusDown="@+id/et_password"
+                    android:nextFocusLeft="@+id/btn_confirm_pwd"
+                    android:nextFocusRight="@+id/et_password"
+                    android:nextFocusUp="@+id/et_password"
+                    android:text="@string/cancel_text"
+                    android:textColor="@color/black_color"
+                    android:textSize="@dimen/sp_22"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_space_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:visibility="visible"/>
+    </LinearLayout>
+
+</RelativeLayout>

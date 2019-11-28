@@ -1,0 +1,2 @@
+include ':app', ':net_socket_client'
+include ':ijkplayer_lib:ijkplayer-java', ':ijkplayer_lib:ijkplayer-armv5', ':ijkplayer_lib:ijkplayer-armv7a', ':ijkplayer_lib:ijkplayer-arm64', ':ijkplayer_lib:ijkplayer-x86_64', ':ijkplayer_lib:ijkplayer-x86'

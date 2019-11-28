@@ -1,0 +1,151 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--dialog中间显示弹窗样式-->
+    <style name="dialog_style_in_middle" parent="android:Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFrame">@null</item>
+    </style>
+
+    <!--dialog中间显示弹窗样式-->
+    <style name="call_dialog_style_in_middle" parent="android:Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowFrame">@null</item>
+    </style>
+
+    <!--<style name="translucent" parent="@android:style/Theme.Dialog">-->
+    <style name="translucent">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <!--Acitvity动画样式-->
+    <style name="AnimationActivity" mce_bogus="1" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@null</item>
+        <item name="android:activityOpenExitAnimation">@null</item>
+        <item name="android:activityCloseEnterAnimation">@null</item>
+        <item name="android:activityCloseExitAnimation">@null</item>
+    </style>
+
+    <!--进度条弹窗样式-->
+    <style name="progress_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <!--输入ip布局中的样式-->
+    <style name="input_ip_linear_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_45</item>
+        <item name="android:layout_marginBottom">@dimen/dp_15</item>
+        <item name="android:layout_marginLeft">@dimen/dp_30</item>
+        <item name="android:layout_marginRight">@dimen/dp_30</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <!--输入ip布局中的选项名称样式-->
+    <style name="input_ip_options_title_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black_color</item>
+        <item name="android:textSize">@dimen/sp_22</item>
+    </style>
+
+    <!--输入ip布局中的按钮样式-->
+    <style name="input_ip_btn_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/frame_dialog_btn_2</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/black_color</item>
+        <item name="android:textSize">@dimen/sp_22</item>
+    </style>
+
+    <!--ip输入布局样式-->
+    <style name="ip_input_edit_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">@dimen/dp_45</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@null</item>
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">3</item>
+        <item name="android:paddingLeft">@dimen/dp_8</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingRight">@dimen/dp_8</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/black_color</item>
+        <item name="android:textSize">@dimen/sp_24</item>
+        <item name="android:textCursorDrawable">@drawable/edittext_color_cursor</item>
+    </style>
+
+    <!--ip输入点布局-->
+    <style name="ip_input_dot_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/dp_45</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:text">.</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/black_color</item>
+        <item name="android:textSize">@dimen/sp_22</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--&lt;!&ndash;分割线样式1&ndash;&gt; <item name="android:background">@color/line_color_s</item>-->
+    <style name="line_s_style">
+        <item name="android:layout_width">2px</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/frame_h_line</item>
+    </style>
+
+    <!--横向分割线样式-->
+    <style name="line_h_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2px</item>
+        <item name="android:background">@color/line_color_h</item>
+    </style>
+
+    <!--安装apk弹窗按钮样式-->
+    <style name="install_apk_btn_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/dp_40</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@null</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@drawable/color_black_to_blue</item>
+        <item name="android:textSize">@dimen/sp_22</item>
+    </style>
+
+
+
+
+</resources>

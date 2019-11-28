@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_450"
+        android:layout_height="wrap_content"
+        android:background="@drawable/frame_gray"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_55"
+            android:background="@drawable/frame_light_blue"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/dp_20"
+            android:text="@string/connect_error_tips"
+            android:textColor="@color/black_color"
+            android:textSize="@dimen/sp_24"/>
+
+
+        <LinearLayout
+            style="@style/input_ip_linear_style"
+            android:layout_marginTop="@dimen/dp_30">
+
+            <TextView
+                style="@style/input_ip_options_title_style"
+                android:text="@string/server_ip_text"/>
+
+            <include layout="@layout/layout_servicer_ip"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            style="@style/input_ip_linear_style">
+
+            <TextView
+                android:id="@+id/textView"
+                style="@style/input_ip_options_title_style"
+                android:text="@string/counter_no"/>
+
+            <LinearLayout
+                android:id="@+id/llyt_counter_no"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:background="@drawable/select_white_to_blue"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:nextFocusDown="@+id/btn_confirm"
+                android:nextFocusLeft="@+id/btn_confirm"
+                android:nextFocusRight="@+id/btn_cancel"
+                android:nextFocusUp="@+id/llyt_service_ip"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_counter_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_45"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_5"
+                    android:singleLine="true"
+                    android:text="1"
+                    android:textColor="@color/black_color"
+                    android:textColorHint="@color/frame_dialog_color"
+                    android:textSize="@dimen/sp_22"/>
+
+                <ImageView
+                    android:id="@+id/iv_arrow"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:background="@mipmap/arrow_down"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            style="@style/input_ip_linear_style"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20">
+
+            <TextView
+                android:id="@+id/btn_confirm"
+                style="@style/input_ip_btn_style"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusDown="@+id/llyt_service_ip"
+                android:nextFocusLeft="@+id/llyt_counter_no"
+                android:nextFocusRight="@+id/btn_cancel"
+                android:nextFocusUp="@+id/llyt_counter_no"
+                android:text="@string/connect_text"/>
+
+            <View
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/btn_cancel"
+                style="@style/input_ip_btn_style"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusDown="@+id/llyt_service_ip"
+                android:nextFocusLeft="@+id/btn_confirm"
+                android:nextFocusRight="@+id/llyt_counter_no"
+                android:nextFocusUp="@+id/llyt_counter_no"
+                android:text="@string/cancel_text"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

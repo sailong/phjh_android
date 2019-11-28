@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/llyt_service_ip"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/dp_45"
+              android:layout_marginLeft="@dimen/dp_5"
+              android:background="@drawable/select_white_to_blue"
+              android:gravity="center"
+              android:orientation="horizontal">
+
+    <EditText
+        android:id="@+id/et_ip_1"
+        style="@style/ip_input_edit_style"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:nextFocusDown="@+id/llyt_counter_no"
+        android:nextFocusRight="@+id/et_ip_2"
+        android:nextFocusLeft="@+id/llyt_counter_no"
+        android:text="0"/>
+
+    <TextView
+        style="@style/ip_input_dot_style"/>
+
+    <EditText
+        android:id="@+id/et_ip_2"
+        style="@style/ip_input_edit_style"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:nextFocusDown="@+id/llyt_counter_no"
+        android:nextFocusLeft="@+id/et_ip_1"
+        android:nextFocusRight="@+id/et_ip_3"
+        android:text="0"/>
+
+    <TextView
+        style="@style/ip_input_dot_style"/>
+
+    <EditText
+        android:id="@+id/et_ip_3"
+        style="@style/ip_input_edit_style"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:nextFocusDown="@+id/llyt_counter_no"
+        android:nextFocusLeft="@+id/et_ip_2"
+        android:nextFocusRight="@+id/et_ip_4"
+        android:text="0"/>
+
+    <TextView
+        style="@style/ip_input_dot_style"/>
+
+
+    <EditText
+        android:id="@+id/et_ip_4"
+        style="@style/ip_input_edit_style"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:nextFocusDown="@+id/llyt_counter_no"
+        android:nextFocusLeft="@+id/et_ip_3"
+        android:text="0"/>
+
+
+</LinearLayout>

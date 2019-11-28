@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_450"
+        android:layout_height="@dimen/dp_450"
+        android:background="@drawable/frame_gray"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_55"
+            android:background="@drawable/frame_light_blue"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp_20"
+            android:text="@string/select_counter_no_tips"
+            android:textColor="@color/black_color"
+            android:textSize="@dimen/sp_24"/>
+
+        <ListView
+            android:id="@+id/mListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:cacheColorHint="@color/transparent"
+            android:divider="#c2c2c2"
+            android:dividerHeight="1px"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:footerDividersEnabled="false"
+            android:headerDividersEnabled="false"
+            android:nextFocusDown="@+id/btn_confirm"
+            android:nextFocusLeft="@+id/btn_confirm"
+            android:nextFocusRight="@+id/btn_cancel"
+            android:nextFocusUp="@+id/btn_confirm"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="#c2c2c2"/>
+
+        <LinearLayout
+            style="@style/input_ip_linear_style"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_20">
+
+            <TextView
+                android:id="@+id/btn_confirm"
+                style="@style/input_ip_btn_style"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusDown="@+id/mListView"
+                android:nextFocusLeft="@+id/mListView"
+                android:nextFocusRight="@+id/btn_cancel"
+                android:nextFocusUp="@+id/mListView"
+                android:text="@string/confirm_text"/>
+
+            <View
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/btn_cancel"
+                style="@style/input_ip_btn_style"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusDown="@+id/mListView"
+                android:nextFocusLeft="@+id/btn_confirm"
+                android:nextFocusRight="@+id/mListView"
+                android:nextFocusUp="@+id/mListView"
+                android:text="@string/cancel_text"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

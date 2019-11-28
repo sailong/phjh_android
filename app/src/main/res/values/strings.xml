@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">QQS液晶显示6.1</string>
+    <string name="need_text">需要</string>
+    <string name="permission_setting_tips">权限，是否去设置</string>
+    <string name="permission_tips">权限申请失败</string>
+    <string name="loading_tip">正在更新文件，请稍后...</string>
+    <string name="loading_tip2">正在更新:</string>
+    <string name="connect_text">连接</string>
+    <string name="confirm_text">确定</string>
+    <string name="cancel_text">取消</string>
+    <string name="server_ip_text">服务器IP:</string>
+    <string name="database_ip_text">数据库IP:</string>
+    <string name="database_name_text">数据库名:</string>
+    <string name="counter_no">窗口编号:</string>
+    <string name="connect_error_tips">连接失败，请重新设置</string>
+    <string name="input_service_ip_tips">请输入完整服务器ip</string>
+    <string name="input_database_ip_tips">请输入完整数据库ip</string>
+    <string name="input_database_name_tips">请输入数据库名称</string>
+    <string name="shutdown_tips_title">正在关机</string>
+    <string name="update_install_text">新版本</string>
+    <string name="update_install_text_2">已经下载成功,是否立即安装？</string>
+    <string name="update_install_now_text">立即安装</string>
+    <string name="select_counter_no_tips">请选择窗口编号</string>
+    <string name="input_pwd">请输入密码</string>
+    <string name="network_settings">网络设置</string>
+    <string name="template_select">模板选择</string>
+    <string name="counter_select">窗口过滤</string>
+    <string name="template_select_tips">请选择显示模板</string>
+    <string name="exit_text">退出</string>
+
+    <string name="input_reg_code">请输入注册码</string>
+    <string name="reg_text">注册</string>
+    <string name="reg_tips_1">温馨提示：</string>
+    <string name="reg_tips_2"><Data><![CDATA[1. 您的设备机器码为 <font color="#FF6302">%s</font><br/>2. 请将机器码发送给客服获取注册码进行注册]]></Data></string>
+    <string name="input_reg_format_error">注册码的格式不正确</string>
+    <string name="reg_success">注册成功</string>
+    <string name="reg_fail">注册码错误，注册失败</string>
+
+
+</resources>

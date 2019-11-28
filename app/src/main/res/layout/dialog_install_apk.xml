@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_400"
+        android:layout_height="wrap_content"
+        android:background="@drawable/frame_dialog"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_install_tip"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_30"
+            android:gravity="center"
+            android:lineSpacingExtra="@dimen/dp_3"
+            android:paddingLeft="@dimen/dp_12"
+            android:paddingRight="@dimen/dp_12"
+            android:textColor="@color/black_color"
+            android:textSize="@dimen/sp_22"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp_30"
+            android:paddingTop="@dimen/dp_30">
+
+            <Button
+                style="@style/install_apk_btn_style"
+                android:visibility="invisible"/>
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusLeft="@+id/btn_ok"
+                android:nextFocusRight="@+id/btn_ok"
+                style="@style/install_apk_btn_style"
+                android:text="@string/cancel_text"/>
+
+            <Button
+                android:id="@+id/btn_ok"
+                style="@style/install_apk_btn_style"
+                android:text="@string/update_install_now_text"
+                android:focusable="true"
+                android:nextFocusLeft="@+id/btn_cancel"
+                android:nextFocusRight="@+id/btn_cancel"
+                android:focusableInTouchMode="true"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
