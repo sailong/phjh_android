@@ -37,7 +37,7 @@ public class WelcomeActivity extends BaseActivity {
             public void run() {
 
                 //判断是否注册
-                boolean isReg = (boolean) SPUtils.get(mContext, SPUtils.IS_REGISTER, false);
+                boolean isReg = true; //(boolean) SPUtils.get(mContext, SPUtils.IS_REGISTER, false);
                 if (isReg) {
                     //进入主页
                     MainActivity.startMainActivity(mContext);

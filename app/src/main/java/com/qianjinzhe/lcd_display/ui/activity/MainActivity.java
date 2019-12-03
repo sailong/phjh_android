@@ -1258,7 +1258,9 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                         } else {
                                             LogUtils.writeLogtoFile("下载完成头像", "设置头像");
                                             //只有模板4才显示头像
-                                            if ("5".equals(currTemplateId)) {
+                                            if ("4".equals(currTemplateId)) {
+                                                mWebView.loadUrl("javascript:SetValue('StaffHeadPath','" + headFilePath + "')");
+                                            }else if ("5".equals(currTemplateId)) {
                                                 ImageManager.getInstance(mContext).loadImageForScal(mContext, new File(headFilePath), iv_head, R.mipmap.jingcha_default);
                                             } else if ("4".equals(currTemplateId) || "7".equals(currTemplateId)) {
                                                 LogUtils.d("照片显示框", "宽=" + iv_head.getWidth() + ",高=" + iv_head.getHeight());
@@ -2281,7 +2283,8 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                                 //清除头像文件
                                                 FileUtils.deleteFile(new File(headFilePath));
                                                 if ("4".equals(currTemplateId)) {
-                                                    iv_head.setImageResource(R.mipmap.person);
+                                                    //iv_head.setImageResource(R.mipmap.person);
+                                                    mWebView.loadUrl("javascript:SetValue('StaffHeadPath','StaffHorizontal1/default-head.png')");
                                                 } else if ("5".equals(currTemplateId)) {
                                                     iv_head.setImageResource(R.mipmap.jingcha_default);
                                                 }
@@ -3309,6 +3312,10 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                             mWebView.loadUrl("javascript:SetValue('NextCallTicket','" + "\\&nbsp;" + "')");
                                             //等待呼叫名称
                                             mWebView.loadUrl("javascript:SetValue('NextCallName','" + "\\&nbsp;" + "')");
+                                            //设置窗口号
+                                            mWebView.loadUrl("javascript:SetValue('Counter','" + SocketUtils.COUNTER_NO + "')");
+                                            //设置窗口别名
+                                            mWebView.loadUrl("javascript:SetValue('CounterAlias','" + mCounterEntity.getCounterAlias() + "')");
                                         }
 
                                         /**如果是模板5*/
