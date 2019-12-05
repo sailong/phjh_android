@@ -117,302 +117,488 @@ import static com.qianjinzhe.lcd_display.util.DialogUtils.hideNavigation;
  *              2018年05月31日
  ********************************************************/
 public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVideoPlayListener, ScreenListener.ScreenStateListener, Handler.Callback, PermissionsUtil.IPermissionsCallback {
-    /**切换历史叫号标识*/
+    /**
+     * 切换历史叫号标识
+     */
     private final static int CHANGE_HOSPITAL_WAIT_CALL = 100;
-    /**更新时间标识*/
+    /**
+     * 更新时间标识
+     */
     private final static int UPDATE_TIME = 1004;
-    /**申请权限code*/
+    /**
+     * 申请权限code
+     */
     private final static int REQUEST_PERMISSIONS_CODE = 1003;
-    /**多媒体显示区域*/
+    /**
+     * 多媒体显示区域
+     */
     @Bind(R.id.rlyt_media_display_area)
     RelativeLayout rlyt_media_display_area;
-    /**图片轮播控件*/
+    /**
+     * 图片轮播控件
+     */
     @Bind(R.id.convenientBanner)
     ConvenientBanner convenientBanner;
-    /**视频控件*/
+    /**
+     * 视频控件
+     */
     @Bind(R.id.mMediaPlayer)
     CustomMediaPlayer mMediaPlayer;
 
-    /**WebView*/
+    /**
+     * WebView
+     */
     @Bind(R.id.mWebView)
     WebView mWebView;
 
-    /**头像*/
+    /**
+     * 头像
+     */
     @Bind(R.id.iv_head)
     ImageView iv_head;
 
     /***************本地模板开始*****************/
 
-    /**本地模板id*/
+    /**
+     * 本地模板id
+     */
     private String local_template_id = "";
 
     /**********本地模板1**************/
-    /**整个本地模板一的布局*/
+    /**
+     * 整个本地模板一的布局
+     */
     @Bind(R.id.llyt_local_hospital_template_1)
     LinearLayout llyt_local_hospital_template_1;
-    /**医院名称*/
+    /**
+     * 医院名称
+     */
     @Bind(R.id.tv_hospital_name_v1)
     TextView tv_hospital_name_v1;
-    /**科室名称*/
+    /**
+     * 科室名称
+     */
     @Bind(R.id.tv_service_name_v1)
     TextView tv_service_name_v1;
-    /**日期和星期*/
+    /**
+     * 日期和星期
+     */
     @Bind(R.id.tv_date_and_week_v1)
     TextView tv_date_and_week_v1;
-    /**时间*/
+    /**
+     * 时间
+     */
     @Bind(R.id.tv_time_v1)
     TextView tv_time_v1;
-    /**诊室名称*/
+    /**
+     * 诊室名称
+     */
     @Bind(R.id.tv_room_name_v1)
     TextView tv_room_name_v1;
-    /**医生头像*/
+    /**
+     * 医生头像
+     */
     @Bind(R.id.iv_doc_head_v1)
     ImageView iv_doc_head_v1;
-    /**医生姓名*/
+    /**
+     * 医生姓名
+     */
     @Bind(R.id.tv_doc_name_v1)
     TextView tv_doc_name_v1;
-    /**医生职称*/
+    /**
+     * 医生职称
+     */
     @Bind(R.id.tv_doc_job_v1)
     TextView tv_doc_job_v1;
 //    /**医生简介*/
 //    @Bind(R.id.tv_doc_info_v1)
 //    TextView tv_doc_info_v1;
-    /**当前叫号*/
+    /**
+     * 当前叫号
+     */
     @Bind(R.id.tv_curr_call_v1)
     TextView tv_curr_call_v1;
-    /**等待叫号1*/
+    /**
+     * 等待叫号1
+     */
     @Bind(R.id.tv_wait_call_1_v1)
     TextView tv_wait_call_1_v1;
-    /**等待叫号2*/
+    /**
+     * 等待叫号2
+     */
     @Bind(R.id.tv_wait_call_2_v1)
     TextView tv_wait_call_2_v1;
-    /**底部滚动的文字*/
+    /**
+     * 底部滚动的文字
+     */
     @Bind(R.id.tv_marquee_text_v1)
     MarqueeText tv_marquee_text_v1;
 
     /************本地模板2**************/
-    /**整个模板布局*/
+    /**
+     * 整个模板布局
+     */
     @Bind(R.id.llyt_local_template_2)
     LinearLayout llyt_local_template_2;
-    /**标题*/
+    /**
+     * 标题
+     */
     @Bind(R.id.tv_title_h1)
     TextView tv_title_h1;
-    /**头像*/
+    /**
+     * 头像
+     */
     @Bind(R.id.iv_head_h1)
     ImageView iv_head_h1;
-    /**姓名*/
+    /**
+     * 姓名
+     */
     @Bind(R.id.tv_name_h1)
     TextView tv_name_h1;
-    /**工号*/
+    /**
+     * 工号
+     */
     @Bind(R.id.tv_job_no_h1)
     TextView tv_job_no_h1;
-    /**窗口号*/
+    /**
+     * 窗口号
+     */
     @Bind(R.id.tv_counter_no_h1)
     TextView tv_counter_no_h1;
-    /**业务名称*/
+    /**
+     * 业务名称
+     */
     @Bind(R.id.tv_service_name_h1)
     TextView tv_service_name_h1;
-    /**当前叫号*/
+    /**
+     * 当前叫号
+     */
     @Bind(R.id.tv_curr_call_h1)
     TextView tv_curr_call_h1;
-    /**下一叫号*/
+    /**
+     * 下一叫号
+     */
     @Bind(R.id.tv_next_call_h1)
     TextView tv_next_call_h1;
-    /**滚动文字*/
+    /**
+     * 滚动文字
+     */
     @Bind(R.id.tv_marquee_text_h1)
     MarqueeText tv_marquee_text_h1;
 
 
     /**********本地模板3**************/
-    /**整个本地模板一的布局*/
+    /**
+     * 整个本地模板一的布局
+     */
     @Bind(R.id.llyt_local_template_3)
     LinearLayout llyt_local_template_3;
-    /**医院名称*/
+    /**
+     * 医院名称
+     */
     @Bind(R.id.tv_hospital_name_v2)
     TextView tv_hospital_name_v2;
-    /**日期和星期*/
+    /**
+     * 日期和星期
+     */
     @Bind(R.id.tv_date_and_week_v2)
     TextView tv_date_and_week_v2;
-    /**时间*/
+    /**
+     * 时间
+     */
     @Bind(R.id.tv_time_v2)
     TextView tv_time_v2;
-    /**诊室名称*/
+    /**
+     * 诊室名称
+     */
     @Bind(R.id.tv_room_name_v2)
     TextView tv_room_name_v2;
-    /**医生头像*/
+    /**
+     * 医生头像
+     */
     @Bind(R.id.iv_doc_head_v2)
     ImageView iv_doc_head_v2;
-    /**医生姓名*/
+    /**
+     * 医生姓名
+     */
     @Bind(R.id.tv_doc_name_v2)
     TextView tv_doc_name_v2;
-    /**医生职称*/
+    /**
+     * 医生职称
+     */
     @Bind(R.id.tv_doc_job_v2)
     TextView tv_doc_job_v2;
-    /**当前叫号*/
+    /**
+     * 当前叫号
+     */
     @Bind(R.id.tv_curr_call_v2)
     TextView tv_curr_call_v2;
-    /**等待叫号1*/
+    /**
+     * 等待叫号1
+     */
     @Bind(R.id.tv_wait_call_1_v2)
     TextView tv_wait_call_1_v2;
-    /**等待叫号2*/
+    /**
+     * 等待叫号2
+     */
     @Bind(R.id.tv_wait_call_2_v2)
     TextView tv_wait_call_2_v2;
-    /**等待叫号3*/
+    /**
+     * 等待叫号3
+     */
     @Bind(R.id.tv_wait_call_3_v2)
     TextView tv_wait_call_3_v2;
-    /**等待叫号4*/
+    /**
+     * 等待叫号4
+     */
     @Bind(R.id.tv_wait_call_4_v2)
     TextView tv_wait_call_4_v2;
-    /**底部滚动的文字*/
+    /**
+     * 底部滚动的文字
+     */
     @Bind(R.id.tv_marquee_text_v2)
     MarqueeText tv_marquee_text_v2;
 
     /**********本地模板4**************/
-    /**整个本地模板一的布局*/
+    /**
+     * 整个本地模板一的布局
+     */
     @Bind(R.id.llyt_local_template_4)
     LinearLayout llyt_local_template_4;
-    /**医院名称*/
+    /**
+     * 医院名称
+     */
     @Bind(R.id.tv_hospital_name_v3)
     TextView tv_hospital_name_v3;
-    /**日期和星期*/
+    /**
+     * 日期和星期
+     */
     @Bind(R.id.tv_date_and_week_v3)
     TextView tv_date_and_week_v3;
-    /**时间*/
+    /**
+     * 时间
+     */
     @Bind(R.id.tv_time_v3)
     TextView tv_time_v3;
-    /**诊室名称*/
+    /**
+     * 诊室名称
+     */
     @Bind(R.id.tv_room_name_v3)
     TextView tv_room_name_v3;
-    /**医生头像*/
+    /**
+     * 医生头像
+     */
     @Bind(R.id.iv_doc_head_v3)
     ImageView iv_doc_head_v3;
-    /**医生姓名*/
+    /**
+     * 医生姓名
+     */
     @Bind(R.id.tv_doc_name_v3)
     TextView tv_doc_name_v3;
-    /**医生职称*/
+    /**
+     * 医生职称
+     */
     @Bind(R.id.tv_doc_job_v3)
     TextView tv_doc_job_v3;
-    /**当前叫号*/
+    /**
+     * 当前叫号
+     */
     @Bind(R.id.tv_curr_call_v3)
     TextView tv_curr_call_v3;
-    /**等待叫号1*/
+    /**
+     * 等待叫号1
+     */
     @Bind(R.id.tv_wait_call_1_v3)
     TextView tv_wait_call_1_v3;
-    /**等待叫号2*/
+    /**
+     * 等待叫号2
+     */
     @Bind(R.id.tv_wait_call_2_v3)
     TextView tv_wait_call_2_v3;
-    /**底部滚动的文字*/
+    /**
+     * 底部滚动的文字
+     */
     @Bind(R.id.tv_marquee_text_v3)
     MarqueeText tv_marquee_text_v3;
 
     /**********本地模板5**************/
-    /**整个模板布局*/
+    /**
+     * 整个模板布局
+     */
     @Bind(R.id.llyt_local_template_5)
     LinearLayout llyt_local_template_5;
-    /**标题*/
+    /**
+     * 标题
+     */
     @Bind(R.id.tv_title_t5)
     TextView tv_title_t5;
-    /**日期和时间*/
+    /**
+     * 日期和时间
+     */
     @Bind(R.id.tv_date_and_time_t5)
     TextView tv_date_and_time_t5;
-    /**头像*/
+    /**
+     * 头像
+     */
     @Bind(R.id.iv_head_t5)
     ImageView iv_head_t5;
-    /**工号*/
+    /**
+     * 工号
+     */
     @Bind(R.id.tv_job_no_t5)
     TextView tv_job_no_t5;
-    /**职称*/
+    /**
+     * 职称
+     */
     @Bind(R.id.tv_job_title_t5)
     TextView tv_job_title_t5;
-    /**窗口号或窗口别名*/
+    /**
+     * 窗口号或窗口别名
+     */
     @Bind(R.id.tv_counter_no_t5)
     TextView tv_counter_no_t5;
-    /**业务名称*/
+    /**
+     * 业务名称
+     */
     @Bind(R.id.tv_service_name_t5)
     TextView tv_service_name_t5;
-    /**当前叫号*/
+    /**
+     * 当前叫号
+     */
     @Bind(R.id.tv_curr_call_t5)
     TextView tv_curr_call_t5;
-    /**下一叫号*/
+    /**
+     * 下一叫号
+     */
     @Bind(R.id.tv_next_call_t5)
     TextView tv_next_call_t5;
-    /**底部滚动的文字*/
+    /**
+     * 底部滚动的文字
+     */
     @Bind(R.id.tv_marquee_text_t5)
     MarqueeText tv_marquee_text_t5;
 
     /**********本地模板6**************/
-    /**整个模板布局*/
+    /**
+     * 整个模板布局
+     */
     @Bind(R.id.llyt_local_template_6)
     LinearLayout llyt_local_template_6;
-    /**标题*/
+    /**
+     * 标题
+     */
     @Bind(R.id.tv_title_t6)
     TextView tv_title_t6;
-    /**业务名称*/
+    /**
+     * 业务名称
+     */
     @Bind(R.id.tv_service_name_t6)
     TextView tv_service_name_t6;
-    /**日期和星期*/
+    /**
+     * 日期和星期
+     */
     @Bind(R.id.tv_date_and_week_t6)
     TextView tv_date_and_week_t6;
-    /**时间*/
+    /**
+     * 时间
+     */
     @Bind(R.id.tv_time_t6)
     TextView tv_time_t6;
-    /**头像*/
+    /**
+     * 头像
+     */
     @Bind(R.id.iv_head_t6)
     ImageView iv_head_t6;
-    /**医生姓名*/
+    /**
+     * 医生姓名
+     */
     @Bind(R.id.tv_doc_name_t6)
     TextView tv_doc_name_t6;
-    /**职称*/
+    /**
+     * 职称
+     */
     @Bind(R.id.tv_job_title_t6)
     TextView tv_job_title_t6;
-    /**窗口号或窗口名称*/
+    /**
+     * 窗口号或窗口名称
+     */
     @Bind(R.id.tv_counter_no_t6)
     TextView tv_counter_no_t6;
-    /**当前叫号*/
+    /**
+     * 当前叫号
+     */
     @Bind(R.id.tv_curr_call_t6)
     TextView tv_curr_call_t6;
-    /**下一叫号*/
+    /**
+     * 下一叫号
+     */
     @Bind(R.id.tv_next_call_t6)
     TextView tv_next_call_t6;
-    /**滚动文字*/
+    /**
+     * 滚动文字
+     */
     @Bind(R.id.tv_marquee_text_t6)
     MarqueeText tv_marquee_text_t6;
 
     /**********本地模板7**************/
-    /**整个模板布局*/
+    /**
+     * 整个模板布局
+     */
     @Bind(R.id.llyt_local_template_7)
     LinearLayout llyt_local_template_7;
-    /**标题*/
+    /**
+     * 标题
+     */
     @Bind(R.id.tv_title_t7)
     TextView tv_title_t7;
-    /**业务名称*/
+    /**
+     * 业务名称
+     */
     @Bind(R.id.tv_service_name_t7)
     TextView tv_service_name_t7;
-    /**日期和星期*/
+    /**
+     * 日期和星期
+     */
     @Bind(R.id.tv_date_and_week_t7)
     TextView tv_date_and_week_t7;
-    /**时间*/
+    /**
+     * 时间
+     */
     @Bind(R.id.tv_time_t7)
     TextView tv_time_t7;
-    /**头像*/
+    /**
+     * 头像
+     */
     @Bind(R.id.iv_head_t7)
     ImageView iv_head_t7;
-    /**医生姓名*/
+    /**
+     * 医生姓名
+     */
     @Bind(R.id.tv_doc_name_t7)
     TextView tv_doc_name_t7;
-    /**职称*/
+    /**
+     * 职称
+     */
     @Bind(R.id.tv_job_title_t7)
     TextView tv_job_title_t7;
-    /**窗口号或窗口名称*/
+    /**
+     * 窗口号或窗口名称
+     */
     @Bind(R.id.tv_counter_no_t7)
     TextView tv_counter_no_t7;
-    /**当前叫号*/
+    /**
+     * 当前叫号
+     */
     @Bind(R.id.tv_curr_call_t7)
     TextView tv_curr_call_t7;
-    /**下一叫号*/
+    /**
+     * 下一叫号
+     */
     @Bind(R.id.tv_next_call_t7)
     TextView tv_next_call_t7;
-    /**滚动文字*/
+    /**
+     * 滚动文字
+     */
     @Bind(R.id.tv_marquee_text_t7)
     MarqueeText tv_marquee_text_t7;
 
@@ -420,38 +606,68 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
     /***************本地模板结束*****************/
 
 
-    /**Socket连接对象*/
+    /**
+     * Socket连接对象
+     */
     private BioClient mClient = null;
-    /**连接定时器*/
+    /**
+     * 连接定时器
+     */
     private Timer connectTimer = null;
-    /**文件长度*/
+    /**
+     * 文件长度
+     */
     private int fileLength = 0;
-    /**开始接收的文件长度*/
+    /**
+     * 开始接收的文件长度
+     */
     private int reciverLength = 0;
-    /**接收类型*/
+    /**
+     * 接收类型
+     */
     private boolean isFile = false;
-    /**文件名*/
+    /**
+     * 文件名
+     */
     private String fileName = "";
-    /**接收的文件名称和路径*/
+    /**
+     * 接收的文件名称和路径
+     */
     private String filePathAndName = "";
-    /**配置文件目录*/
+    /**
+     * 配置文件目录
+     */
     public String configDirPath = "";
-    /**视屏图片目录*/
+    /**
+     * 视屏图片目录
+     */
     public String mediaDirPath = "";
-    /**创建FileOutputStream对象*/
+    /**
+     * 创建FileOutputStream对象
+     */
     private FileOutputStream outputStream = null;
-    /**创建BufferedOutputStream对象*/
+    /**
+     * 创建BufferedOutputStream对象
+     */
     private BufferedOutputStream bufferedOutputStream = null;
 
-    /**多媒体文件根目录*/
+    /**
+     * 多媒体文件根目录
+     */
     public String root_path = "";
-    /**返回的文件目录*/
+    /**
+     * 返回的文件目录
+     */
     private String fileDir = "";
-    /**是否创建输出流*/
+    /**
+     * 是否创建输出流
+     */
     private boolean isCreateStream = false;
 
 
-    /**权限工具*/
+    /**
+     * 权限工具
+     */
     public PermissionsUtil permissionsUtil;
 
     /*****日期时间相关*****/
@@ -459,157 +675,290 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
     private Handler mTimehandler;
 
     /****Arg3中的参数******/
-    /**下一叫号票号*/
+    /**
+     * 下一叫号票号
+     */
     private String nextTicketNo = "";
-    /**当前叫号名称*/
+    /**
+     * 当前叫号名称
+     */
     private String currName = "";
-    /**医生的名称*/
+    /**
+     * 医生的名称
+     */
     private String doctorName = "";
-    /**诊室别名*/
+    /**
+     * 诊室别名
+     */
     private String consultingRoomAlias = "";
-    /**下一叫号名称*/
+    /**
+     * 下一叫号名称
+     */
     private String nextName = "";
-    /**第二个等待叫号票号*/
+    /**
+     * 第二个等待叫号票号
+     */
     private String twoTicketNo = "";
-    /**第二个等待叫号名称*/
+    /**
+     * 第二个等待叫号名称
+     */
     private String twoName = "";
-    /**第三个等待叫号票号*/
+    /**
+     * 第三个等待叫号票号
+     */
     private String threeTicketNo = "";
-    /**第三个等待叫号名称*/
+    /**
+     * 第三个等待叫号名称
+     */
     private String threeName = "";
-    /**第四个等待叫号票号*/
+    /**
+     * 第四个等待叫号票号
+     */
     private String fourTicketNo = "";
-    /**第四个等待叫号名称*/
+    /**
+     * 第四个等待叫号名称
+     */
     private String fourName = "";
 
 
-    /**多媒体文件地址集合*/
+    /**
+     * 多媒体文件地址集合
+     */
     private ArrayList<MediaEntity> mediaUrlList = new ArrayList<MediaEntity>();
-    /**当前位置*/
+    /**
+     * 当前位置
+     */
     private int curr_position = 0;
-    /**图片切换时间，单位：秒*/
+    /**
+     * 图片切换时间，单位：秒
+     */
     private int picSwitchTime = 10;
 
-    /**上次保存的配置文件*/
+    /**
+     * 上次保存的配置文件
+     */
     private AppSettingEntity settingEntity_old = null;
-    /**本次的更新文件*/
+    /**
+     * 本次的更新文件
+     */
     private AppSettingEntity settingEntity_new = null;
 
-    /**版本号*/
+    /**
+     * 版本号
+     */
     private String version = "";
 
-    /**是否自动关机*/
+    /**
+     * 是否自动关机
+     */
     private boolean isAutoShutdown = false;
-    /**关机时间*/
+    /**
+     * 关机时间
+     */
     private String autoShutdown_time = "";
-    /**是否已启动自动关机*/
+    /**
+     * 是否已启动自动关机
+     */
     private boolean isAutoShutDownStart = false;
 
-    /**退出密码*/
+    /**
+     * 退出密码
+     */
     private String quitPassword = "123";
-    /**是否使用退出密码,true使用，false不使用*/
+    /**
+     * 是否使用退出密码,true使用，false不使用
+     */
     private boolean isUseQuitPassword = true;
-    /**定时锁屏定时器*/
+    /**
+     * 定时锁屏定时器
+     */
     private Timer lockSreenTimer;
 
-    /**锁屏相关*/
+    /**
+     * 锁屏相关
+     */
     private ComponentName mAdminName;
     private DevicePolicyManager mDPM;
-    /**锁屏监听*/
+    /**
+     * 锁屏监听
+     */
     private ScreenListener mScreenListener;
-    /**是否锁屏,true表示锁屏了*/
+    /**
+     * 是否锁屏,true表示锁屏了
+     */
     private boolean isLockScreen = false;
 
-    /**是否开始轮播状态,true是,false不是*/
+    /**
+     * 是否开始轮播状态,true是,false不是
+     */
     private boolean isStartPlayState = false;
-    /**是否正在播放视频*/
+    /**
+     * 是否正在播放视频
+     */
     private boolean isPlayVideoMode = false;
-    /**背景名称*/
+    /**
+     * 背景名称
+     */
     private String bgName = "";
-    /**多媒体目录,默认根目录*/
+    /**
+     * 多媒体目录,默认根目录
+     */
     private String mediaDirectory = "\\";
-    /**多媒体切换开关,1切换,0不切换*/
+    /**
+     * 多媒体切换开关,1切换,0不切换
+     */
     private String mediaSwitch = "0";
-    /**是否使用动画,1使用*/
+    /**
+     * 是否使用动画,1使用
+     */
     private String mediaAnimation = "1";
-    /**更新参数*/
+    /**
+     * 更新参数
+     */
     private String reqFiles = "";
-    /**多媒体宽高*/
+    /**
+     * 多媒体宽高
+     */
     private int mediaWidth = 0;
-    /**多媒体高*/
+    /**
+     * 多媒体高
+     */
     private int mediaHeight = 0;
 
-    /**定时关机线程*/
+    /**
+     * 定时关机线程
+     */
     private TimeThread timeThread;
 
-    /**窗口对象*/
+    /**
+     * 窗口对象
+     */
     private CounterSettingEntity mCounterEntity = null;
-    /**模板对象*/
+    /**
+     * 模板对象
+     */
     private TemplateEntity mTemplateEntity = null;
 
-    /**保存历史叫号和当前叫号信息集合，0未当前叫号*/
+    /**
+     * 保存历史叫号和当前叫号信息集合，0未当前叫号
+     */
     private ArrayList<CallInfoEntity> call_info_list = new ArrayList<CallInfoEntity>();
-    /**标识是否启用叫号模板*/
+    /**
+     * 标识是否启用叫号模板
+     */
     private boolean isEnalbeCallModel = false;
-    /**叫号模板文字*/
+    /**
+     * 叫号模板文字
+     */
     private String callModel_text = "";
-    /**窗口号的长度*/
+    /**
+     * 窗口号的长度
+     */
     private int counterNoLen = 1;
-    /**标识是否刚进入主页*/
+    /**
+     * 标识是否刚进入主页
+     */
     private boolean is_enter_first = true;
-    /**标识是否显示过了窗口ip设置弹窗*/
+    /**
+     * 标识是否显示过了窗口ip设置弹窗
+     */
     private boolean is_showIp = true;
 
-    /**模板id*/
+    /**
+     * 模板id
+     */
     private String currTemplateId = "";
-    /**医院模板当前叫号*/
+    /**
+     * 医院模板当前叫号
+     */
     private ArrayList<CallInfoEntity> currCallInfoList = new ArrayList<CallInfoEntity>();
-    /**医院模板历史叫号列表数据集合*/
+    /**
+     * 医院模板历史叫号列表数据集合
+     */
     private ArrayList<CallInfoListEntity> hospitalWaitCallList = new ArrayList<CallInfoListEntity>();
-    /**医院综合屏历史叫号切换定时器*/
+    /**
+     * 医院综合屏历史叫号切换定时器
+     */
     private Timer waitingCallTimer;
-    /**医院历史叫号切换位置*/
+    /**
+     * 医院历史叫号切换位置
+     */
     private int hospitalWaitCallPosition = 0;
-    /**是否改变了模板id*/
+    /**
+     * 是否改变了模板id
+     */
     private boolean isChangeTemplateId = false;
-    /**多媒体数量*/
+    /**
+     * 多媒体数量
+     */
     private int media_count = 0;
-    /**html相关文件个数*/
+    /**
+     * html相关文件个数
+     */
     private int html_file_count = 0;
-    /**记录文件的名称与大小*/
+    /**
+     * 记录文件的名称与大小
+     */
     private Map<String, Integer> fileMaps = new HashMap<String, Integer>();
-    /**定时检查配置文件定时器*/
+    /**
+     * 定时检查配置文件定时器
+     */
     private Timer checkSettingFileTmer;
 
-    /**员工工号*/
+    /**
+     * 员工工号
+     */
     private String staffId = "";
-    /**员工名称*/
+    /**
+     * 员工名称
+     */
     private String staffName = "";
-    /**员工职称*/
+    /**
+     * 员工职称
+     */
     private String staffTitle = "";
-    /**员工星级*/
+    /**
+     * 员工星级
+     */
     private int star = -1;
-    /**是否存在头像,不存在false,true存在*/
+    /**
+     * 是否存在头像,不存在false,true存在
+     */
     private boolean isHasHeadPic = false;
-    /**头像文件路径*/
+    /**
+     * 头像文件路径
+     */
     private String headFilePath = "";
-    /**配置文件路径*/
+    /**
+     * 配置文件路径
+     */
     private String settingFilePath = "";
-    /**标识是否是手动连接,true手动连接，第一次进入算手动连接*/
+    /**
+     * 标识是否是手动连接,true手动连接，第一次进入算手动连接
+     */
     private boolean isManualConnect = true;
-    /**标识是否被强制退出*/
+    /**
+     * 标识是否被强制退出
+     */
     private boolean isForcedOut = false;
-    /**版本更新文件*/
+    /**
+     * 版本更新文件
+     */
     private String updateFilePath = "";
-    /**版本更新请求次数*/
+    /**
+     * 版本更新请求次数
+     */
     private int updateVersionNum = 0;
 
-    /**当前选中的窗口(综合屏窗口过滤的)*/
+    /**
+     * 当前选中的窗口(综合屏窗口过滤的)
+     */
     private ArrayList<CounterEntity> currSelectedCounterList = new ArrayList<CounterEntity>();
 
 
     /**
      * 进入主页
+     *
      * @param context
      */
     public static void startMainActivity(Context context) {
@@ -1074,7 +1423,6 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
 
     /**
-     *
      * 连接监听
      */
     private IConnectListener mConnectResultListener = new IConnectListener() {
@@ -1187,6 +1535,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 发送消息
+     *
      * @param msg
      */
     public void sendMessage(SocketMsg msg) {
@@ -1263,7 +1612,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                                     headFilePath = "";
                                                 }
                                                 mWebView.loadUrl("javascript:SetValue('StaffHeadPath','" + headFilePath + "')");
-                                            }else if ("5".equals(currTemplateId)) {
+                                            } else if ("5".equals(currTemplateId)) {
                                                 ImageManager.getInstance(mContext).loadImageForScal(mContext, new File(headFilePath), iv_head, R.mipmap.jingcha_default);
                                             } else if ("4".equals(currTemplateId) || "7".equals(currTemplateId)) {
                                                 LogUtils.d("照片显示框", "宽=" + iv_head.getWidth() + ",高=" + iv_head.getHeight());
@@ -1474,6 +1823,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 写入多媒体文件
+     *
      * @param bytes
      */
     private void receiverMeidaFile(byte[] bytes, int length) {
@@ -1520,6 +1870,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 写入配置文件
+     *
      * @param bytes
      */
     private boolean receiverConfigOrHeadFile(byte[] bytes, int length) {
@@ -1587,6 +1938,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 处理服务端发过来的数据
+     *
      * @param Msg 消息对象
      */
     private void handleServerData(final SocketMsg Msg) {
@@ -1821,7 +2173,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                     }
 
                                     // simon检查是否有重复叫号
-                                    if (!AppUtils.checkHasReCall(call_info_list, Msg.TicketNo)){
+                                    if (!AppUtils.checkHasReCall(call_info_list, Msg.TicketNo)) {
                                         //添加数据
                                         CallInfoEntity callInfo = new CallInfoEntity(AppUtils.formatCounterNo(Msg.CounterNo + "", counterNoLen), Msg.TicketNo, currName, consultingRoomAlias);
                                         //添加当前叫号
@@ -2749,9 +3101,9 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
             public void run() {
                 try {
                     ArrayList<CallInfoEntity> call_info_list1 = null;
-                    if (call_info_list.size() > 12){
+                    if (call_info_list.size() > 12) {
                         call_info_list1 = new ArrayList(call_info_list.subList(0, 12));
-                    }else{
+                    } else {
                         call_info_list1 = call_info_list;
                     }
                     Log.e(TAG, call_info_list1 + "");
@@ -2788,7 +3140,8 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 获取弹窗的文字信息
-     * @param entity 叫号信息对象
+     *
+     * @param entity               叫号信息对象
      * @param callPopupWindowModel 叫号弹窗模板
      * @return 返回完整的叫号信息
      */
@@ -2810,6 +3163,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 叫号弹窗
+     *
      * @param context
      * @param templateEntity 模板对象
      * @param callInfoEntity 当前叫号信息对象
@@ -2875,6 +3229,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 设置默认参数
+     *
      * @param settingEntity 配置文件实体
      */
     private void setDefaultParam(final AppSettingEntity settingEntity) {
@@ -3341,7 +3696,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                             mWebView.loadUrl("javascript:SetValue('CounterAlias','" + mCounterEntity.getCounterAlias() + "')");
                                             //设置头像
                                             long headFileSize = FileUtils.getFileLength(headFilePath);
-                                            if(headFileSize == 0){
+                                            if (headFileSize == 0) {
                                                 headFilePath = "";
                                             }
                                             mWebView.loadUrl("javascript:SetValue('StaffHeadPath','" + headFilePath + "')");
@@ -3416,7 +3771,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                                                         if ("auto".equalsIgnoreCase(str[0])) {
                                                                             m_left = 0;
                                                                         } else {
-                                                                             m_left = (int) Math.round(Double.parseDouble(str[0]));
+                                                                            m_left = (int) Math.round(Double.parseDouble(str[0]));
                                                                         }
                                                                         //获取多媒体的宽高
                                                                         mediaWidth = (int) Math.round(Double.parseDouble(str[2]));
@@ -3717,6 +4072,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 设置叫号模板
+     *
      * @param templateEntity 模板对象
      */
     private void setHistoryCallModel(TemplateEntity templateEntity) {
@@ -3739,6 +4095,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 显示8号叫号模板
+     *
      * @param templateEntity 模板对象
      */
     private void ShowCallInfoFor8Template(TemplateEntity templateEntity) {
@@ -3916,8 +4273,9 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 检查更新
+     *
      * @param entity_old 之前保存在本地的配置文件
-     * @param entity 现下载下来的服务器最新配置文件
+     * @param entity     现下载下来的服务器最新配置文件
      */
     private void checkUpdateFile(AppSettingEntity entity_old, final AppSettingEntity entity) {
         try {
@@ -4090,10 +4448,11 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 开始或停止轮播图片
-     * @param mediaDirPath 对媒体路径
+     *
+     * @param mediaDirPath  对媒体路径
      * @param picSwitchTime 轮播间隔时间，秒
-     * @param advertWidth 多媒体宽
-     * @param advertHeight 多媒体高
+     * @param advertWidth   多媒体宽
+     * @param advertHeight  多媒体高
      * @param isStartOrStop true开始播放，false停止
      */
     private void startOrStopRotationPic(final String mediaDirPath, final int picSwitchTime,
@@ -4121,10 +4480,11 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 显示轮播图片
-     * @param mediaDirPath 多媒体本地路径
+     *
+     * @param mediaDirPath  多媒体本地路径
      * @param picSwitchTime 轮播时间间隔
-     * @param advertWidth 轮播显示区宽
-     * @param advertHeight 轮播显示区高
+     * @param advertWidth   轮播显示区宽
+     * @param advertHeight  轮播显示区高
      */
     private void showMediaView(String mediaDirPath, final int picSwitchTime, final int advertWidth, final int advertHeight) {
         try {
@@ -4282,6 +4642,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 播放视频
+     *
      * @param entity 视频对象
      */
     private void playVideo(final MediaEntity entity) {
@@ -4319,6 +4680,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 播放完成或播放错误
+     *
      * @param isCompletionOrError true播放完成,false播放错误
      */
     private void palyCompletionOrError(final boolean isCompletionOrError) {
@@ -4939,8 +5301,9 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 判断是否已经添加模板
+     *
      * @param templateList 模板集合
-     * @param localTempId 本地模板id
+     * @param localTempId  本地模板id
      * @return
      */
     private boolean isAddTemplate(ArrayList<TemplateEntity> templateList, String localTempId) {
@@ -4963,6 +5326,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
     /**
      * 接收关机倒计时Event,如果在更新，关闭更新窗口，
      * 取消关机时，显示更新弹窗
+     *
      * @param event
      */
     @SuppressWarnings("UnusedDeclaration")
@@ -4992,6 +5356,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 接收连接Event,连接服务器
+     *
      * @param event
      */
     @SuppressWarnings("UnusedDeclaration")
@@ -5061,6 +5426,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 接收网络变化Socket消息Event
+     *
      * @param event
      */
     @SuppressWarnings("UnusedDeclaration")
@@ -5214,6 +5580,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
     /**
      * 设置屏幕方向
+     *
      * @param entity
      */
     private void setScreenOrientation(TemplateEntity entity) {
