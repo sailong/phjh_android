@@ -48,6 +48,8 @@ public class Constants {
     /**被踢下线,被强制退出*/
     public static final int QQS_TVD_FORCED_OFFLINE = 14;
 
+    public static final int QQS_TVD_HEARTBEAT = 0x999;
+
     /**************************多媒体播放类型***********************************/
     /**轮播图片*/
     public static final String MEDIA_PLAY_TYPE_IMAGE = "1";

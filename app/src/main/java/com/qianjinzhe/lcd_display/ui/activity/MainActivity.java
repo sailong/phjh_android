@@ -129,6 +129,8 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
      * 申请权限code
      */
     private final static int REQUEST_PERMISSIONS_CODE = 1003;
+
+    private static long mLastHeartBeatResponse = 0;
     /**
      * 多媒体显示区域
      */
@@ -1265,27 +1267,23 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                     //如果已连接服务器
                     if (mClient != null && mClient.isConnected()) {
                         LogUtils.d("测试", "已连接");
-                        try {
-                            SocketMsg msg = new SocketMsg();
-                            msg.MsgType = 10000;
-                            sendMessage(msg);
-                        } catch (Exception e) {
-                            if (mClient != null) {
-                                //断开连接
-                                mClient.disconnect();
-                            }
+                        SocketMsg msg = new SocketMsg();
+                        msg.MsgType = Constants.QQS_TVD_HEARTBEAT;
+                        sendMessage(msg);
+                        if (mLastHeartBeatResponse > 0 && (System.currentTimeMillis() / 1000 - mLastHeartBeatResponse) > 30){
+                            mLastHeartBeatResponse = 0;
+                            mClient.disconnect();
                         }
                     }
-                    //如果已断开，重连
-                    else if (mClient != null && mClient.isColsed()) {
-                        LogUtils.d("测试", "断开重连");
-                        mClient.reconnect();
-                    }
-                    //重新创建连接
-                    else if (mClient == null) {
+                    if (mClient == null) {
                         LogUtils.d("测试", "重新生成连接");
                         //连接Socket
                         connectSocket();
+                    }
+                    //如果已断开，重连
+                    else if (!mClient.isConnected()) {
+                        LogUtils.d("测试", "断开重连");
+                        mClient.reconnect();
                     }
                 }
             }, 200, 10 * 1000);
@@ -1524,6 +1522,8 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
             msg.MsgType = Constants.QQS_TVD_LOGIN;
             //窗口号
             msg.CounterNo = SocketUtils.COUNTER_NO;
+
+            msg.Arg4 = "15";
             sendMessage(msg);
             LogUtils.writeLogtoFile("登录", "发送登录消息" + msg.toString());
         } catch (Exception e) {
@@ -1927,6 +1927,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
             msg.MsgType = Constants.QQS_TVD_LOGIN;
             msg.CounterNo = SocketUtils.COUNTER_NO;
             msg.Arg1 = 4;
+            msg.Arg4 = "15";
             sendMessage(msg);
             LogUtils.writeLogtoFile("强制登录", "发送登录消息" + msg.toString());
         } catch (Exception e) {
@@ -2961,7 +2962,14 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                             enterSettingIp("设备被强制退出，请重新连接");
                         }
                     });
+                case Constants.QQS_TVD_HEARTBEAT:
+                    Log.e("Heartbeat", Msg.toString());
+                    LogUtils.writeLogtoFile("Heartbeat", Msg.toString());
+                    mLastHeartBeatResponse = System.currentTimeMillis() / 1000;
+                    break;
 
+                default:
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
