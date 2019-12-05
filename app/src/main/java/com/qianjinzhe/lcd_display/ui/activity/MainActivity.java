@@ -1259,6 +1259,9 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                             LogUtils.writeLogtoFile("下载完成头像", "设置头像");
                                             //只有模板4才显示头像
                                             if ("4".equals(currTemplateId)) {
+                                                if (headFileSize == 0) {
+                                                    headFilePath = "";
+                                                }
                                                 mWebView.loadUrl("javascript:SetValue('StaffHeadPath','" + headFilePath + "')");
                                             }else if ("5".equals(currTemplateId)) {
                                                 ImageManager.getInstance(mContext).loadImageForScal(mContext, new File(headFilePath), iv_head, R.mipmap.jingcha_default);
@@ -1817,16 +1820,28 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                         return;
                                     }
 
-                                    //添加数据
-                                    CallInfoEntity callInfo = new CallInfoEntity(AppUtils.formatCounterNo(Msg.CounterNo + "", counterNoLen), Msg.TicketNo, currName, consultingRoomAlias);
-                                    //删除重复叫号
-                                    AppUtils.delHasReCall(call_info_list, Msg.TicketNo);
-                                    //添加当前叫号
-                                    call_info_list.add(0, callInfo);
-                                    //如果数据为12条，移除最早的那一条
-                                    if (call_info_list.size() == 12) {
-                                        call_info_list.remove(11);
+                                    // simon检查是否有重复叫号
+                                    if (!AppUtils.checkHasReCall(call_info_list, Msg.TicketNo)){
+                                        //添加数据
+                                        CallInfoEntity callInfo = new CallInfoEntity(AppUtils.formatCounterNo(Msg.CounterNo + "", counterNoLen), Msg.TicketNo, currName, consultingRoomAlias);
+                                        //添加当前叫号
+                                        call_info_list.add(0, callInfo);
+                                        //如果数据为100条，移除最早的那一条
+                                        if (call_info_list.size() == 100) {
+                                            call_info_list.remove(99);
+                                        }
                                     }
+
+//                                    //添加数据
+//                                    CallInfoEntity callInfo = new CallInfoEntity(AppUtils.formatCounterNo(Msg.CounterNo + "", counterNoLen), Msg.TicketNo, currName, consultingRoomAlias);
+//                                    //删除重复叫号
+//                                    AppUtils.delHasReCall(call_info_list, Msg.TicketNo);
+//                                    //添加当前叫号
+//                                    call_info_list.add(0, callInfo);
+//                                    //如果数据为12条，移除最早的那一条
+//                                    if (call_info_list.size() == 12) {
+//                                        call_info_list.remove(11);
+//                                    }
                                     //如果启用了模板
                                     if (isEnalbeCallModel) {
                                         //显示叫号信息
@@ -2733,18 +2748,26 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
             @Override
             public void run() {
                 try {
+                    ArrayList<CallInfoEntity> call_info_list1 = null;
+                    if (call_info_list.size() > 12){
+                        call_info_list1 = new ArrayList(call_info_list.subList(0, 12));
+                    }else{
+                        call_info_list1 = call_info_list;
+                    }
+                    Log.e(TAG, call_info_list1 + "");
+
                     StringBuffer stringBuffer = new StringBuffer();
                     stringBuffer.append("[{");
-                    stringBuffer.append("\"count" + "\":\"" + call_info_list.size() + "\",");
+                    stringBuffer.append("\"count" + "\":\"" + call_info_list1.size() + "\",");
                     stringBuffer.append("\"value\":\"");
-                    for (int i = 0; i < call_info_list.size(); i++) {
-                        CallInfoEntity entity = call_info_list.get(i);
+                    for (int i = 0; i < call_info_list1.size(); i++) {
+                        CallInfoEntity entity = call_info_list1.get(i);
                         String callStr = callModel_text.replace("{TicketNo.}", entity.getTicketNo())
                                 .replace("{CounterNo.}", entity.getCounterNo())
                                 .replace("{Name}", entity.getName())
                                 .replace("{Counter Alias}", entity.getConsultingRoomName());
                         stringBuffer.append(callStr);
-                        if (i < call_info_list.size() - 1) {
+                        if (i < call_info_list1.size() - 1) {
                             stringBuffer.append(",");
                         }
                     }
@@ -3316,6 +3339,12 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                             mWebView.loadUrl("javascript:SetValue('Counter','" + SocketUtils.COUNTER_NO + "')");
                                             //设置窗口别名
                                             mWebView.loadUrl("javascript:SetValue('CounterAlias','" + mCounterEntity.getCounterAlias() + "')");
+                                            //设置头像
+                                            long headFileSize = FileUtils.getFileLength(headFilePath);
+                                            if(headFileSize == 0){
+                                                headFilePath = "";
+                                            }
+                                            mWebView.loadUrl("javascript:SetValue('StaffHeadPath','" + headFilePath + "')");
                                         }
 
                                         /**如果是模板5*/
@@ -5096,6 +5125,8 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                         mWebView.loadUrl("javascript:SetValue('NextCallTicket','" + "\\&nbsp;" + "')");
                         //设置显示下一叫号名称为空
                         mWebView.loadUrl("javascript:SetValue('NextCallName','" + "\\&nbsp;" + "')");
+                        //设置默认头像
+                        mWebView.loadUrl("javascript:SetValue('StaffHeadPath','" + "\\&nbsp;" + "')");
                     } else if ("5".equals(currTemplateId) || "6".equals(currTemplateId)) {
                         //当前呼叫票号
                         mWebView.loadUrl("javascript:SetValue('CallInfo','" + "\\&nbsp;" + "')");

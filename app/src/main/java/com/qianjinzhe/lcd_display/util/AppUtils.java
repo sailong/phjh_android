@@ -1239,6 +1239,21 @@ public class AppUtils {
         }
     }
 
+    /**
+     * 检查重复叫号信息
+     * @param call_info_list 叫号信息集合
+     * @param curr_ticket_num 当前票号
+     */
+    public static Boolean checkHasReCall(ArrayList<CallInfoEntity> call_info_list, String curr_ticket_num) {
+        for (int i = 0; i < call_info_list.size(); i++) {
+            //如果票号相同
+            if (call_info_list.get(i).getTicketNo().equals(curr_ticket_num)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /**
      * 安装apk文件
