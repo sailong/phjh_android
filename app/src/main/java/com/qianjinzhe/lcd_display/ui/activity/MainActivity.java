@@ -131,6 +131,8 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
     private final static int REQUEST_PERMISSIONS_CODE = 1003;
 
     private static long mLastHeartBeatResponse = 0;
+
+    private static String HEART_BEAT_SECS = "15";
     /**
      * 多媒体显示区域
      */
@@ -1283,7 +1285,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                     //如果已断开，重连
                     else if (!mClient.isConnected()) {
                         LogUtils.d("测试", "断开重连");
-                        mClient.reconnect();
+                        mClient.connect();
                     }
                 }
             }, 200, 10 * 1000);
@@ -1523,7 +1525,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
             //窗口号
             msg.CounterNo = SocketUtils.COUNTER_NO;
 
-            msg.Arg4 = "15";
+            msg.Arg4 = HEART_BEAT_SECS;
             sendMessage(msg);
             LogUtils.writeLogtoFile("登录", "发送登录消息" + msg.toString());
         } catch (Exception e) {
@@ -1927,7 +1929,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
             msg.MsgType = Constants.QQS_TVD_LOGIN;
             msg.CounterNo = SocketUtils.COUNTER_NO;
             msg.Arg1 = 4;
-            msg.Arg4 = "15";
+            msg.Arg4 = HEART_BEAT_SECS;
             sendMessage(msg);
             LogUtils.writeLogtoFile("强制登录", "发送登录消息" + msg.toString());
         } catch (Exception e) {
