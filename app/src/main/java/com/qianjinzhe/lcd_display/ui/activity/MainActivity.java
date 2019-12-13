@@ -133,6 +133,9 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
     private static long mLastHeartBeatResponse = 0;
 
     private static String HEART_BEAT_SECS = "15";
+
+    private static long mLastLoginRequest = 0;
+    private static boolean mIsLogin = false;
     /**
      * 多媒体显示区域
      */
@@ -1269,10 +1272,16 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                     //如果已连接服务器
                     if (mClient != null && mClient.isConnected()) {
                         LogUtils.d("测试", "已连接");
-                        SocketMsg msg = new SocketMsg();
-                        msg.MsgType = Constants.QQS_TVD_HEARTBEAT;
-                        sendMessage(msg);
-                        if (mLastHeartBeatResponse > 0 && (System.currentTimeMillis() / 1000 - mLastHeartBeatResponse) > 30){
+                        if (mIsLogin) {
+                            SocketMsg msg = new SocketMsg();
+                            msg.MsgType = Constants.QQS_TVD_HEARTBEAT;
+                            msg.CounterNo = SocketUtils.COUNTER_NO;
+                            sendMessage(msg);
+                            if (mLastHeartBeatResponse > 0 && (System.currentTimeMillis() / 1000 - mLastHeartBeatResponse) > 30) {
+                                mLastHeartBeatResponse = 0;
+                                mClient.disconnect();
+                            }
+                        } else if ((System.currentTimeMillis() / 1000 - mLastLoginRequest) > 10) {
                             mLastHeartBeatResponse = 0;
                             mClient.disconnect();
                         }
@@ -1526,6 +1535,8 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
             msg.CounterNo = SocketUtils.COUNTER_NO;
 
             msg.Arg4 = HEART_BEAT_SECS;
+            mIsLogin = false;
+            mLastLoginRequest = System.currentTimeMillis() / 1000;
             sendMessage(msg);
             LogUtils.writeLogtoFile("登录", "发送登录消息" + msg.toString());
         } catch (Exception e) {
@@ -1930,6 +1941,8 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
             msg.CounterNo = SocketUtils.COUNTER_NO;
             msg.Arg1 = 4;
             msg.Arg4 = HEART_BEAT_SECS;
+            mIsLogin = false;
+            mLastLoginRequest = System.currentTimeMillis() / 1000;
             sendMessage(msg);
             LogUtils.writeLogtoFile("强制登录", "发送登录消息" + msg.toString());
         } catch (Exception e) {
@@ -1951,6 +1964,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                 case Constants.QQS_TVD_LOGIN://电视登录
                     LogUtils.d("receiveMessage", "电视登录成功" + Msg.toString());
                     LogUtils.writeLogtoFile("电视登录成功返回", Msg.toString());
+                    mIsLogin = true;
                     //Arg1 = 1禁止登录，2 重复登录，3正常登录
                     if (Msg.Arg1 == 3 || Msg.Arg1 == 4) {
                         //标识不是强制退出
@@ -2420,6 +2434,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                     break;
 
                 case Constants.QQS_TVD_SENDSTART://事件：开始发送文件
+//                    Log.e("send====start", Msg.toString());
                     try {
                         LogUtils.d("receiveMessage", "开始发送文件" + Msg.toString());
                         LogUtils.writeLogtoFile("服务器开始发送文件", Msg.toString());
@@ -2448,6 +2463,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                     break;
 
                 case Constants.QQS_TVD_SENDEND:  //事件：结束发送文件
+//                    Log.e("send=======end", Msg.toString());
                     try {
                         LogUtils.d("receiveMessage", "结束发送文件" + Msg.toString());
                         LogUtils.writeLogtoFile("服务器结束发送文件", Msg.toString());
@@ -2580,6 +2596,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                     break;
 
                 case Constants.QQS_TVD_SENDFILE://服务器发送文件
+//                    Log.e("send======file", Msg.toString());
                     try {
                         LogUtils.d("receiveMessage", "服务器发送文件" + Msg.toString());
                         LogUtils.writeLogtoFile("服务器发送文件", Msg.toString());
@@ -2610,6 +2627,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                 case Constants.QQS_TVD_USERINFO://服务器发送员工信息
                     LogUtils.d("receiveMessage", "服务器发送员工信息" + Msg.toString());
                     LogUtils.writeLogtoFile("服务器发送员工信息", Msg.toString());
+//                    Log.e("emp====info", Msg.toString());
                     try {//[1][张三][大唐经理][0][a]
                         runOnUiThread(new Runnable() {
                             @Override
@@ -2965,8 +2983,6 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                         }
                     });
                 case Constants.QQS_TVD_HEARTBEAT:
-                    Log.e("Heartbeat", Msg.toString());
-                    LogUtils.writeLogtoFile("Heartbeat", Msg.toString());
                     mLastHeartBeatResponse = System.currentTimeMillis() / 1000;
                     break;
 
@@ -3116,7 +3132,6 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                     } else {
                         call_info_list1 = call_info_list;
                     }
-                    Log.e(TAG, call_info_list1 + "");
 
                     StringBuffer stringBuffer = new StringBuffer();
                     stringBuffer.append("[{");
