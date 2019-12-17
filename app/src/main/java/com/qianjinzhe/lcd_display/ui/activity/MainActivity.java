@@ -130,11 +130,10 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
      */
     private final static int REQUEST_PERMISSIONS_CODE = 1003;
 
-    private static long mLastHeartBeatResponse = 0;
+    private static long mLastActive = 0;
 
     private static String HEART_BEAT_SECS = "15";
 
-    private static long mLastLoginRequest = 0;
     private static boolean mIsLogin = false;
     /**
      * 多媒体显示区域
@@ -1269,6 +1268,11 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                     if (isForcedOut) {
                         return;
                     }
+                    if (mClient == null) {
+                        LogUtils.d("测试", "重新生成连接");
+                        //连接Socket
+                        connectSocket();
+                    }
                     //如果已连接服务器
                     if (mClient != null && mClient.isConnected()) {
                         LogUtils.d("测试", "已连接");
@@ -1277,22 +1281,14 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                             msg.MsgType = Constants.QQS_TVD_HEARTBEAT;
                             msg.CounterNo = SocketUtils.COUNTER_NO;
                             sendMessage(msg);
-                            if (mLastHeartBeatResponse > 0 && (System.currentTimeMillis() / 1000 - mLastHeartBeatResponse) > 30) {
-                                mLastHeartBeatResponse = 0;
-                                mClient.disconnect();
-                            }
-                        } else if ((System.currentTimeMillis() / 1000 - mLastLoginRequest) > 10) {
-                            mLastHeartBeatResponse = 0;
+                        }
+                        if ((System.currentTimeMillis() - mLastActive) > 30 * 1000) {
                             mClient.disconnect();
                         }
                     }
-                    if (mClient == null) {
-                        LogUtils.d("测试", "重新生成连接");
-                        //连接Socket
-                        connectSocket();
-                    }
+
                     //如果已断开，重连
-                    else if (!mClient.isConnected()) {
+                    if (!mClient.isConnected()) {
                         LogUtils.d("测试", "断开重连");
                         mClient.connect();
                     }
@@ -1425,7 +1421,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
             }
             mClient = new BioClient(mMessageProcessor, mConnectResultListener);
             //设置连接超时
-            mClient.setConnectTimeout(3 * 1000);
+            mClient.setConnectTimeout(10 * 1000);
             //设置服务ip和端口号
             mClient.setConnectAddress(new TcpAddress[]{new TcpAddress(SocketUtils.SERCIVER_IP, SocketUtils.SERCIVER_PORT)});
             //执行连接
@@ -1443,6 +1439,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
     private IConnectListener mConnectResultListener = new IConnectListener() {
         @Override
         public void onConnectionSuccess() {
+            mLastActive = System.currentTimeMillis();
             //连接成功
             runOnUiThread(new Runnable() {
                 public void run() {
@@ -1542,7 +1539,6 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
             msg.Arg4 = HEART_BEAT_SECS;
             mIsLogin = false;
-            mLastLoginRequest = System.currentTimeMillis() / 1000;
             sendMessage(msg);
             LogUtils.writeLogtoFile("登录", "发送登录消息" + msg.toString());
         } catch (Exception e) {
@@ -1626,7 +1622,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                         } else {
                                             LogUtils.writeLogtoFile("下载完成头像", "设置头像");
                                             //只有模板4才显示头像
-                                            if ("4".equals(currTemplateId)) {
+                                            if ("4".equals(currTemplateId) || "5".equals(currTemplateId)) {
                                                 if (headFileSize == 0) {
                                                     headFilePath = "";
                                                 }
@@ -1948,7 +1944,6 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
             msg.Arg1 = 4;
             msg.Arg4 = HEART_BEAT_SECS;
             mIsLogin = false;
-            mLastLoginRequest = System.currentTimeMillis() / 1000;
             sendMessage(msg);
             LogUtils.writeLogtoFile("强制登录", "发送登录消息" + msg.toString());
         } catch (Exception e) {
@@ -1966,6 +1961,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
     private void handleServerData(final SocketMsg Msg) {
         try {
             LogUtils.d("接收到消息", "接收到消息:" + Msg.toString());
+            mLastActive = System.currentTimeMillis();
             switch (Msg.MsgType) {
                 case Constants.QQS_TVD_LOGIN://电视登录
                     LogUtils.d("receiveMessage", "电视登录成功" + Msg.toString());
@@ -2669,14 +2665,14 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                             //设置员工工号
                                             mWebView.loadUrl("javascript:SetValue('StaffNum','" + staffId + "')");
                                             //设置员工职称
-                                            if ("4".equals(currTemplateId)) {
+                                            if ("4".equals(currTemplateId) || "5".equals(currTemplateId)) {
                                                 mWebView.loadUrl("javascript:SetValue('StaffTitle','" + staffTitle + "')");
                                             }
                                             //如果没有头像
                                             if (!isHasHeadPic) {
                                                 //清除头像文件
                                                 FileUtils.deleteFile(new File(headFilePath));
-                                                if ("4".equals(currTemplateId)) {
+                                                if ("4".equals(currTemplateId) || "5".equals(currTemplateId)) {
                                                     //iv_head.setImageResource(R.mipmap.person);
                                                     mWebView.loadUrl("javascript:SetValue('StaffHeadPath','StaffHorizontal1/default-head.png')");
                                                 } else if ("5".equals(currTemplateId)) {
@@ -2989,7 +2985,6 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                         }
                     });
                 case Constants.QQS_TVD_HEARTBEAT:
-                    mLastHeartBeatResponse = System.currentTimeMillis() / 1000;
                     break;
 
                 default:
@@ -3737,14 +3732,28 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                         if ("5".equals(currTemplateId)) {
                                             //设置标题
                                             mWebView.loadUrl("javascript:SetValue('Title','" + mCounterEntity.getTitle() + "')");
+                                            //设置业务名称
+                                            mWebView.loadUrl("javascript:SetValue('ServiceName','" + mCounterEntity.getServiceName() + "')");
+                                            //设置提示文字
+                                            mWebView.loadUrl("javascript:SetValue('TipText','" + mCounterEntity.getTipText() + "')");
                                             //设置员工名称
                                             mWebView.loadUrl("javascript:SetValue('StaffName','" + staffName + "')");
                                             //设置员工工号
                                             mWebView.loadUrl("javascript:SetValue('StaffNum','" + staffId + "')");
+                                            //设置员工职称
+                                            mWebView.loadUrl("javascript:SetValue('StaffTitle','" + staffTitle + "')");
                                             //当前呼叫票号
                                             mWebView.loadUrl("javascript:SetValue('CallInfo','" + "\\&nbsp;" + "')");
                                             //设置窗口号
                                             mWebView.loadUrl("javascript:SetValue('Counter','" + SocketUtils.COUNTER_NO + "')");
+                                            //设置窗口别名
+                                            mWebView.loadUrl("javascript:SetValue('CounterAlias','" + mCounterEntity.getCounterAlias() + "')");
+                                            //设置头像
+                                            long headFileSize = FileUtils.getFileLength(headFilePath);
+                                            if (headFileSize == 0) {
+                                                headFilePath = "";
+                                            }
+                                            mWebView.loadUrl("javascript:SetValue('StaffHeadPath','" + headFilePath + "')");
                                         }
 
                                         /**如果是模板6*/
@@ -5527,6 +5536,8 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                     } else if ("5".equals(currTemplateId) || "6".equals(currTemplateId)) {
                         //当前呼叫票号
                         mWebView.loadUrl("javascript:SetValue('CallInfo','" + "\\&nbsp;" + "')");
+                        //设置默认头像
+                        mWebView.loadUrl("javascript:SetValue('StaffHeadPath','" + "\\&nbsp;" + "')");
                     } else if ("7".equals(currTemplateId)) {
                         //设置职称为空
                         mWebView.loadUrl("javascript:SetValue('StaffTitle','" + "\\&nbsp;" + "')");
