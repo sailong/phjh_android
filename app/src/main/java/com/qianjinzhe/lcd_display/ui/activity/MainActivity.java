@@ -1367,7 +1367,10 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                 //配置文件Setting.xml路径
                 settingFilePath = configDirPath + "/Setting.xml";
                 //头像路径
-                headFilePath = configDirPath + "/head.jpg";
+                if(staffId == ""){
+                    staffId = "head";
+                }
+                headFilePath = configDirPath + "/" + staffId + ".jpg";
                 //版本更新文件
                 updateFilePath = root_path + "/update.zip";
             } else {
@@ -1391,7 +1394,10 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                     //配置文件Setting.xml路径
                     settingFilePath = configDirPath + "/Setting.xml";
                     //头像路径
-                    headFilePath = configDirPath + "/head.jpg";
+                    if(staffId == ""){
+                        staffId = "head";
+                    }
+                    headFilePath = configDirPath + "/" + staffId + ".jpg";
                     //版本更新文件
                     updateFilePath = root_path + "/update.zip";
                 } else {
