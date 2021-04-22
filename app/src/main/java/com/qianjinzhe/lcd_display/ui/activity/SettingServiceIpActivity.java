@@ -94,7 +94,7 @@ public class SettingServiceIpActivity extends BaseActivity implements View.OnFoc
     LinearLayout llyt_counter_no;
 
     /**服务器IP*/
-    private String serviceIp = "192.168.0.100";
+    private String serviceIp = "172.16.37.105";
     /**窗口号集合*/
     private ArrayList<CounterSettingEntity> counterList = new ArrayList<CounterSettingEntity>();
     /**窗口编号*/

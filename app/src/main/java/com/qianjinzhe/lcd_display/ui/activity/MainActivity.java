@@ -1622,17 +1622,13 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                         } else {
                                             LogUtils.writeLogtoFile("下载完成头像", "设置头像");
                                             //只有模板4才显示头像
-                                            if ("4".equals(currTemplateId) || "5".equals(currTemplateId)) {
+                                            if ("1".equals(currTemplateId) || "3".equals(currTemplateId) || "4".equals(currTemplateId) || "5".equals(currTemplateId) || "6".equals(currTemplateId) || "7".equals(currTemplateId)) {
                                                 if (headFileSize == 0) {
                                                     headFilePath = "";
                                                 }
                                                 mWebView.loadUrl("javascript:SetValue('StaffHeadPath','" + headFilePath + "')");
-                                            } else if ("5".equals(currTemplateId)) {
-                                                ImageManager.getInstance(mContext).loadImageForScal(mContext, new File(headFilePath), iv_head, R.mipmap.jingcha_default);
-                                            } else if ("4".equals(currTemplateId) || "7".equals(currTemplateId)) {
-                                                LogUtils.d("照片显示框", "宽=" + iv_head.getWidth() + ",高=" + iv_head.getHeight());
-                                                ImageManager.getInstance(mContext).loadImageForScal(mContext, new File(headFilePath), iv_head, R.mipmap.person);
                                             }
+
                                             //如果是安卓本地模板
                                             else if ("0".equals(currTemplateId)) {
                                                 //如果是本地模板1
@@ -2264,7 +2260,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                     @Override
                                     public void run() {
                                         try {
-                                            if ("1".equals(currTemplateId) || "4".equals(currTemplateId)) {
+                                            if ("1".equals(currTemplateId) || "3".equals(currTemplateId) || "4".equals(currTemplateId) || "5".equals(currTemplateId) || "6".equals(currTemplateId) || "7".equals(currTemplateId)) {
                                                 //当前呼叫票号
                                                 mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + Msg.TicketNo + "')");
                                                 //当前呼叫名称
@@ -2276,16 +2272,6 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                                 //等待呼叫名称
                                                 String n_name = TextUtils.isEmpty(nextName) ? "\\&nbsp;" : nextName;
                                                 mWebView.loadUrl("javascript:SetValue('NextCallName','" + n_name + "')");
-                                            } else if ("5".equals(currTemplateId)) {
-                                                //设置叫号
-                                                String callInfo = "请" + Msg.TicketNo + "到" + (Msg.CounterNo < 10 ? "0" + Msg.CounterNo : Msg.CounterNo) + "号窗口办理";
-                                                mWebView.loadUrl("javascript:SetValue('CallInfo','" + callInfo + "')");
-                                            } else if ("6".equals(currTemplateId)) {
-                                                String callInfo = "请" + Msg.TicketNo + "号";
-                                                mWebView.loadUrl("javascript:SetValue('CallInfo','" + callInfo + "')");
-                                            } else if ("7".equals(currTemplateId)) {
-                                                String callInfo = "请" + Msg.TicketNo + "号到" + (Msg.CounterNo < 10 ? "0" + Msg.CounterNo : Msg.CounterNo) + "号窗口";
-                                                mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + callInfo + "')");
                                             }
                                         } catch (Exception e) {
                                             e.printStackTrace();
@@ -2659,38 +2645,19 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                         isHasHeadPic = !TextUtils.isEmpty(userInfo[4]);
 
                                         //如果是模板4或模板5,才有员工信息
-                                        if ("4".equals(currTemplateId) || "5".equals(currTemplateId)) {
+                                        if ("1".equals(currTemplateId) || "3".equals(currTemplateId) || "4".equals(currTemplateId) || "5".equals(currTemplateId) || "6".equals(currTemplateId) || "7".equals(currTemplateId)) {
                                             //设置员工名称
                                             mWebView.loadUrl("javascript:SetValue('StaffName','" + staffName + "')");
                                             //设置员工工号
                                             mWebView.loadUrl("javascript:SetValue('StaffNum','" + staffId + "')");
-                                            //设置员工职称
-                                            if ("4".equals(currTemplateId) || "5".equals(currTemplateId)) {
-                                                mWebView.loadUrl("javascript:SetValue('StaffTitle','" + staffTitle + "')");
-                                            }
-                                            //如果没有头像
-                                            if (!isHasHeadPic) {
-                                                //清除头像文件
-                                                FileUtils.deleteFile(new File(headFilePath));
-                                                if ("4".equals(currTemplateId) || "5".equals(currTemplateId)) {
-                                                    //iv_head.setImageResource(R.mipmap.person);
-                                                    mWebView.loadUrl("javascript:SetValue('StaffHeadPath','StaffHorizontal1/default-head.png')");
-                                                } else if ("5".equals(currTemplateId)) {
-                                                    iv_head.setImageResource(R.mipmap.jingcha_default);
-                                                }
-                                            }
-                                        }
-                                        //如果是7号模板
-                                        else if ("7".equals(currTemplateId)) {
-                                            //设置业务员姓名
-                                            mWebView.loadUrl("javascript:SetValue('StaffName','" + staffName + "')");
                                             //设置员工职称
                                             mWebView.loadUrl("javascript:SetValue('StaffTitle','" + staffTitle + "')");
                                             //如果没有头像
                                             if (!isHasHeadPic) {
                                                 //清除头像文件
                                                 FileUtils.deleteFile(new File(headFilePath));
-                                                iv_head.setImageResource(R.mipmap.person);
+                                                //iv_head.setImageResource(R.mipmap.person);
+                                                mWebView.loadUrl("javascript:SetValue('StaffHeadPath','StaffHorizontal1/default-head.png')");
                                             }
                                         }
                                         //如果是安作自定义模板
@@ -2819,7 +2786,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                             || "0".equals(currTemplateId)) {
                                         //暂停服务
                                         if (Msg.Arg1 == 1) {
-                                            if ("1".equals(currTemplateId) || "4".equals(currTemplateId)) {
+                                            if ("1".equals(currTemplateId) || "3".equals(currTemplateId) || "4".equals(currTemplateId) || "5".equals(currTemplateId) || "6".equals(currTemplateId) || "7".equals(currTemplateId)) {
                                                 //当前呼叫票号
                                                 mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + "暂停" + "')");
                                                 //当前呼叫名称
@@ -2828,12 +2795,6 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                                 mWebView.loadUrl("javascript:SetValue('NextCallTicket','" + "\\&nbsp;" + "')");
                                                 //等待呼叫名称
                                                 mWebView.loadUrl("javascript:SetValue('NextCallName','" + "\\&nbsp;" + "')");
-                                            } else if ("5".equals(currTemplateId)) {
-                                                mWebView.loadUrl("javascript:SetValue('CallInfo','暂停服务')");
-                                            } else if ("6".equals(currTemplateId)) {
-                                                mWebView.loadUrl("javascript:SetValue('CallInfo','暂停服务')");
-                                            } else if ("7".equals(currTemplateId)) {
-                                                mWebView.loadUrl("javascript:SetValue('CurrCallTicket','暂停服务')");
                                             }
                                             //如果是本地模板
                                             else if ("0".equals(currTemplateId)) {
@@ -2882,7 +2843,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                         //取消暂停服务
                                         else if (Msg.Arg1 == 0) {
                                             //清除之前的叫号信息,如果1号模板或4号模板
-                                            if ("1".equals(currTemplateId) || "4".equals(currTemplateId)) {
+                                            if ("1".equals(currTemplateId) || "3".equals(currTemplateId) || "4".equals(currTemplateId) || "5".equals(currTemplateId) || "6".equals(currTemplateId) || "7".equals(currTemplateId)) {
                                                 //当前呼叫票号
                                                 mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + "\\&nbsp;" + "')");
                                                 //当前呼叫名称
@@ -2891,12 +2852,6 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                                 mWebView.loadUrl("javascript:SetValue('NextCallTicket','" + "\\&nbsp;" + "')");
                                                 //等待呼叫名称
                                                 mWebView.loadUrl("javascript:SetValue('NextCallName','" + "\\&nbsp;" + "')");
-                                            } else if ("5".equals(currTemplateId)) {
-                                                mWebView.loadUrl("javascript:SetValue('CallInfo','" + "\\&nbsp;" + "')");
-                                            } else if ("6".equals(currTemplateId)) {
-                                                mWebView.loadUrl("javascript:SetValue('CallInfo','" + "\\&nbsp;" + "')");
-                                            } else if ("7".equals(currTemplateId)) {
-                                                mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + "\\&nbsp;" + "')");
                                             }
                                             //如果是本地模板
                                             else if ("0".equals(currTemplateId)) {
@@ -3645,24 +3600,6 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                         //解压缩升级
                                         upgrade();
 
-                                        /**模板1的*/
-                                        if ("1".equals(currTemplateId)) {
-                                            //设置标题
-                                            mWebView.loadUrl("javascript:SetValue('Title','" + mCounterEntity.getTitle() + "')");
-                                            //设置业务名称
-                                            mWebView.loadUrl("javascript:SetValue('ServiceName','" + mCounterEntity.getServiceName() + "')");
-                                            //设置提示文字
-                                            mWebView.loadUrl("javascript:SetValue('TipText','" + mCounterEntity.getTipText() + "')");
-                                            //设置当前票号
-                                            mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + "\\&nbsp;" + "')");
-                                            //设置当前票号名称
-                                            mWebView.loadUrl("javascript:SetValue('CurrCallName','" + "\\&nbsp;" + "')");
-                                            //设置显示下一叫号
-                                            mWebView.loadUrl("javascript:SetValue('NextCallTicket','" + "\\&nbsp;" + "')");
-                                            //设置显示下一叫号名称
-                                            mWebView.loadUrl("javascript:SetValue('NextCallName','" + "\\&nbsp;" + "')");
-                                        }
-
                                         /**模板2的*/
                                         if ("2".equals(currTemplateId)) {
                                             //设置标题
@@ -3676,26 +3613,8 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                             }
                                         }
 
-                                        /**模板3的*/
-                                        if ("3".equals(currTemplateId)) {
-                                            hospitalWaitCallPosition = 0;
-                                            //获取初始化数据(等候叫号数据)
-                                            hospitalWaitCallList.clear();
-                                            hospitalWaitCallList.addAll(settingEntity.getWaitCallInfoList());
-                                            //设置标题
-                                            mWebView.loadUrl("javascript:SetValue('Title','" + mCounterEntity.getTitle() + "')");
-                                            //设置滚动文字
-                                            mWebView.loadUrl("javascript:SetValue('TipText','" + mCounterEntity.getTipText() + "')");
-                                            //显示当前叫号信息
-                                            mWebView.loadUrl("javascript:SetCurrentCall('" + new Gson().toJson(currCallInfoList) + "')");
-                                            //过号的
-                                            mWebView.loadUrl("javascript:SetCalled('" + new Gson().toJson(call_info_list) + "')");
-                                            //定时显示医院等待叫号
-                                            showChangeHospitalWaitingCallTimer();
-                                        }
-
                                         /**模板4的*/
-                                        if ("4".equals(currTemplateId)) {
+                                        if ("1".equals(currTemplateId) || "3".equals(currTemplateId) || "4".equals(currTemplateId) || "5".equals(currTemplateId) || "6".equals(currTemplateId) || "7".equals(currTemplateId)) {
                                             //设置标题
                                             mWebView.loadUrl("javascript:SetValue('Title','" + mCounterEntity.getTitle() + "')");
                                             //设置业务名称
@@ -3726,58 +3645,6 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                                 headFilePath = "";
                                             }
                                             mWebView.loadUrl("javascript:SetValue('StaffHeadPath','" + headFilePath + "')");
-                                        }
-
-                                        /**如果是模板5*/
-                                        if ("5".equals(currTemplateId)) {
-                                            //设置标题
-                                            mWebView.loadUrl("javascript:SetValue('Title','" + mCounterEntity.getTitle() + "')");
-                                            //设置业务名称
-                                            mWebView.loadUrl("javascript:SetValue('ServiceName','" + mCounterEntity.getServiceName() + "')");
-                                            //设置提示文字
-                                            mWebView.loadUrl("javascript:SetValue('TipText','" + mCounterEntity.getTipText() + "')");
-                                            //设置员工名称
-                                            mWebView.loadUrl("javascript:SetValue('StaffName','" + staffName + "')");
-                                            //设置员工工号
-                                            mWebView.loadUrl("javascript:SetValue('StaffNum','" + staffId + "')");
-                                            //设置员工职称
-                                            mWebView.loadUrl("javascript:SetValue('StaffTitle','" + staffTitle + "')");
-                                            //当前呼叫票号
-                                            mWebView.loadUrl("javascript:SetValue('CallInfo','" + "\\&nbsp;" + "')");
-                                            //设置窗口号
-                                            mWebView.loadUrl("javascript:SetValue('Counter','" + SocketUtils.COUNTER_NO + "')");
-                                            //设置窗口别名
-                                            mWebView.loadUrl("javascript:SetValue('CounterAlias','" + mCounterEntity.getCounterAlias() + "')");
-                                            //设置头像
-                                            long headFileSize = FileUtils.getFileLength(headFilePath);
-                                            if (headFileSize == 0) {
-                                                headFilePath = "";
-                                            }
-                                            mWebView.loadUrl("javascript:SetValue('StaffHeadPath','" + headFilePath + "')");
-                                        }
-
-                                        /**如果是模板6*/
-                                        if ("6".equals(currTemplateId)) {
-                                            //设置标题
-                                            mWebView.loadUrl("javascript:SetValue('Title','" + mCounterEntity.getTitle() + "')");
-                                            //设置窗口号
-                                            mWebView.loadUrl("javascript:SetValue('Counter','" + SocketUtils.COUNTER_NO + "号窗口')");
-                                            //当前呼叫票号
-                                            mWebView.loadUrl("javascript:SetValue('CallInfo','" + "\\&nbsp;" + "')");
-                                        }
-
-                                        /**如果是7号模板*/
-                                        if ("7".equals(currTemplateId)) {
-                                            //设置标题，
-                                            mWebView.loadUrl("javascript:SetValue('Title','" + mCounterEntity.getTitle() + "')");
-                                            //设置业务类型
-                                            mWebView.loadUrl("javascript:SetValue('ServiceName','" + mCounterEntity.getCounterAlias() + "')");
-                                            //设置业务员名称为空
-                                            mWebView.loadUrl("javascript:SetValue('StaffName','" + staffName + "')");
-                                            //设置职称为空
-                                            mWebView.loadUrl("javascript:SetValue('StaffTitle','" + staffTitle + "')");
-                                            //设置叫号为空
-                                            mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + "\\&nbsp;" + "')");
                                         }
 
                                         /**如果8号模板，竖屏综合屏*/
@@ -5522,7 +5389,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
             public void run() {
                 try {
                     //如果是模板1或模板4
-                    if ("1".equals(currTemplateId) || "4".equals(currTemplateId)) {
+                    if ("1".equals(currTemplateId) || "3".equals(currTemplateId) || "4".equals(currTemplateId) || "5".equals(currTemplateId) || "6".equals(currTemplateId) || "7".equals(currTemplateId)) {
                         //设置当前票号为空
                         mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + "\\&nbsp;" + "')");
                         //设置当前票号名称为空
@@ -5533,18 +5400,6 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                         mWebView.loadUrl("javascript:SetValue('NextCallName','" + "\\&nbsp;" + "')");
                         //设置默认头像
                         mWebView.loadUrl("javascript:SetValue('StaffHeadPath','" + "\\&nbsp;" + "')");
-                    } else if ("5".equals(currTemplateId) || "6".equals(currTemplateId)) {
-                        //当前呼叫票号
-                        mWebView.loadUrl("javascript:SetValue('CallInfo','" + "\\&nbsp;" + "')");
-                        //设置默认头像
-                        mWebView.loadUrl("javascript:SetValue('StaffHeadPath','" + "\\&nbsp;" + "')");
-                    } else if ("7".equals(currTemplateId)) {
-                        //设置职称为空
-                        mWebView.loadUrl("javascript:SetValue('StaffTitle','" + "\\&nbsp;" + "')");
-                        //设置业务员名称为空
-                        mWebView.loadUrl("javascript:SetValue('StaffName','" + "\\&nbsp;" + "')");
-                        //设置叫号为空
-                        mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + "\\&nbsp;" + "')");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

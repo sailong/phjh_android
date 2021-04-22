@@ -20,13 +20,13 @@ import com.qianjinzhe.lcd_display.bean.SocketMsg;
 
 public class SocketUtils {
     /**服务器ip,默认192.168.0.100*/
-    public static String SERCIVER_IP = "192.168.0.100";
+    public static String SERCIVER_IP = "172.16.37.105";
     /**数据库ip*/
-    public static String DATABASE_IP = "192.168.0.100";
+    public static String DATABASE_IP = "172.16.37.202";
     /**数据库ip*/
-    public static String SERCIVER_IP_OLD = "192.168.0.100";
+    public static String SERCIVER_IP_OLD = "172.16.37.202";
     /**数据库名称*/
-    public static String DATABASE_NAME = "qqs";
+    public static String DATABASE_NAME = "qqs6";
     /**窗口号*/
     public static int COUNTER_NO = 1;
     /**服务器端口*/
