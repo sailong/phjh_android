@@ -1622,13 +1622,12 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                         } else {
                                             LogUtils.writeLogtoFile("下载完成头像", "设置头像");
                                             //只有模板4才显示头像
-                                            if ("1".equals(currTemplateId) || "3".equals(currTemplateId) || "4".equals(currTemplateId) || "5".equals(currTemplateId) || "6".equals(currTemplateId) || "7".equals(currTemplateId)) {
+                                            if (!"2".equals(currTemplateId) && !"8".equals(currTemplateId)) {
                                                 if (headFileSize == 0) {
                                                     headFilePath = "";
                                                 }
                                                 mWebView.loadUrl("javascript:SetValue('StaffHeadPath','" + headFilePath + "')");
                                             }
-
                                             //如果是安卓本地模板
                                             else if ("0".equals(currTemplateId)) {
                                                 //如果是本地模板1
@@ -2105,183 +2104,8 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                 }
 
                             }
-
-                            //如果是医院综合模板
-                            if ("3".equals(currTemplateId)) {
-                                try {
-                                    //添加数据
-                                    CallInfoEntity callInfo = new CallInfoEntity(Msg.CounterNo + "", Msg.TicketNo, currName, doctorName, consultingRoomAlias, AppUtils.getServiceName(hospitalWaitCallList, Msg.TicketNo));
-                                    //以下是隐藏名字中间的字
-//                                    CallInfoEntity callInfo = new CallInfoEntity(Msg.CounterNo + "", Msg.TicketNo, AppUtils.formatName(currName), doctorName, consultingRoomAlias, AppUtils.getServiceName(hospitalWaitCallList, Msg.TicketNo));
-                                    //删除重复叫号
-                                    AppUtils.delHasReCall(currCallInfoList, Msg.TicketNo);
-                                    //添加当前叫号
-                                    currCallInfoList.add(0, callInfo);
-                                    //如果数据为12条，移除最早的那一条
-                                    if (currCallInfoList.size() == 7) {
-                                        //添加过号
-                                        CallInfoEntity callInfoEntity = currCallInfoList.get(6);
-                                        //删除重复叫号
-                                        AppUtils.delHasReCall(call_info_list, callInfoEntity.getTicketNo());
-                                        //添加当前叫号
-                                        call_info_list.add(0, callInfoEntity);
-                                        //如果数据为12条，移除最早的那一条
-                                        if (call_info_list.size() == 12) {
-                                            call_info_list.remove(11);
-                                        }
-                                        currCallInfoList.remove(6);
-                                    }
-                                    //过号中移除当前的叫号(重复呼叫可能出现过号和当前叫号中都出现)
-                                    AppUtils.removeCurrCallFromCalled(currCallInfoList, call_info_list);
-
-                                    //当前叫号科室的等候叫号集合
-                                    ArrayList<CallInfoEntity> list = new ArrayList<CallInfoEntity>();
-                                    if (callListStr.length > 1) {
-                                        for (int i = 1; i < callListStr.length; i++) {
-                                            String[] callStr_child = callListStr[i].split("\\|");
-                                            //下一叫号票号
-                                            String ticketNo = !TextUtils.isEmpty(callStr_child[0]) ? callStr_child[0] : "";
-                                            //下一叫号名称
-                                            String name = !TextUtils.isEmpty(callStr_child[1]) ? callStr_child[1] : "";
-                                            CallInfoEntity callInfoEntity = new CallInfoEntity(ticketNo, name);
-                                            //以下是隐藏名字中间文字
-//                                            CallInfoEntity callInfoEntity = new CallInfoEntity(ticketNo, AppUtils.formatName(name));
-                                            list.add(callInfoEntity);
-                                        }
-                                    }
-                                    //添加等待叫号
-                                    AppUtils.addWaitCall(hospitalWaitCallList, list, Msg.TicketNo);
-
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            try {
-                                                //显示当前叫号信息
-                                                mWebView.loadUrl("javascript:SetCurrentCall('" + new Gson().toJson(currCallInfoList) + "')");
-                                                //过号的
-                                                mWebView.loadUrl("javascript:SetCalled('" + new Gson().toJson(call_info_list) + "')");
-                                                //获取历史叫号分组后的json字符串集合
-                                                ArrayList<String> jsonList = AppUtils.getWaitCallJsonStrArr(hospitalWaitCallList);
-                                                if (jsonList.size() > 0) {
-                                                    //显示历史叫号
-                                                    LogUtils.d("json数据", jsonList.get(hospitalWaitCallPosition));
-                                                    mWebView.loadUrl("javascript:SetHistoryCall('" + jsonList.get(hospitalWaitCallPosition) + "')");
-                                                }
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                                LogUtils.writeLogtoFile("异常日志", Log.getStackTraceString(e));
-                                            }
-                                        }
-                                    });
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    LogUtils.writeLogtoFile("异常日志", Log.getStackTraceString(e));
-                                }
-
-                            }
-                            //如果是综合屏屏
-                            else if ("2".equals(currTemplateId)) {
-                                try {
-                                    //如果窗口号未在选中的集合中,跳出
-                                    if (!AppUtils.isCounterSelected(currSelectedCounterList, Msg.CounterNo)) {
-                                        return;
-                                    }
-
-                                    // simon检查是否有重复叫号
-                                    if (!AppUtils.checkHasReCall(call_info_list, Msg.TicketNo)) {
-                                        //添加数据
-                                        CallInfoEntity callInfo = new CallInfoEntity(AppUtils.formatCounterNo(Msg.CounterNo + "", counterNoLen), Msg.TicketNo, currName, consultingRoomAlias);
-                                        //添加当前叫号
-                                        call_info_list.add(0, callInfo);
-                                        //如果数据为100条，移除最早的那一条
-                                        if (call_info_list.size() == 100) {
-                                            call_info_list.remove(99);
-                                        }
-                                    }
-
-//                                    //添加数据
-//                                    CallInfoEntity callInfo = new CallInfoEntity(AppUtils.formatCounterNo(Msg.CounterNo + "", counterNoLen), Msg.TicketNo, currName, consultingRoomAlias);
-//                                    //删除重复叫号
-//                                    AppUtils.delHasReCall(call_info_list, Msg.TicketNo);
-//                                    //添加当前叫号
-//                                    call_info_list.add(0, callInfo);
-//                                    //如果数据为12条，移除最早的那一条
-//                                    if (call_info_list.size() == 12) {
-//                                        call_info_list.remove(11);
-//                                    }
-                                    //如果启用了模板
-                                    if (isEnalbeCallModel) {
-                                        //显示叫号信息
-                                        showCallInfoList();
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    LogUtils.writeLogtoFile("异常日志", Log.getStackTraceString(e));
-                                }
-                            }
-                            //如果是竖屏综合屏
-                            else if ("8".equals(currTemplateId)) {
-                                try {
-                                    //如果窗口号未在选中的集合中,跳出
-                                    if (!AppUtils.isCounterSelected(currSelectedCounterList, Msg.CounterNo)) {
-                                        return;
-                                    }
-                                    //添加数据
-                                    CallInfoEntity callInfo = new CallInfoEntity(AppUtils.formatCounterNo(Msg.CounterNo + "", counterNoLen), Msg.TicketNo, currName, consultingRoomAlias);
-                                    //删除重复叫号
-                                    AppUtils.delHasReCall(call_info_list, Msg.TicketNo);
-                                    //添加当前叫号
-                                    call_info_list.add(0, callInfo);
-                                    //如果数据为12条，移除最早的那一条
-                                    if (call_info_list.size() == 12) {
-                                        call_info_list.remove(11);
-                                    }
-                                    //如果启用了模板
-                                    if (isEnalbeCallModel) {
-                                        //显示叫号信息
-                                        //显示叫号
-                                        ShowCallInfoFor8Template(mTemplateEntity);
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    LogUtils.writeLogtoFile("异常日志", Log.getStackTraceString(e));
-                                }
-
-                            }
-                            //如果是单窗口屏
-                            else if ("1".equals(currTemplateId) || "4".equals(currTemplateId) || "5".equals(currTemplateId)
-                                    || "6".equals(currTemplateId) || "7".equals(currTemplateId)) {
-                                //如果不是登录窗口号
-                                if (SocketUtils.COUNTER_NO != Msg.CounterNo) {
-                                    return;
-                                }
-                                //显示叫号信息
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            if ("1".equals(currTemplateId) || "3".equals(currTemplateId) || "4".equals(currTemplateId) || "5".equals(currTemplateId) || "6".equals(currTemplateId) || "7".equals(currTemplateId)) {
-                                                //当前呼叫票号
-                                                mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + Msg.TicketNo + "')");
-                                                //当前呼叫名称
-                                                String c_name = TextUtils.isEmpty(currName) ? "\\&nbsp;" : currName;
-                                                mWebView.loadUrl("javascript:SetValue('CurrCallName','" + c_name + "')");
-                                                //等待呼叫票号
-                                                String n_ticket = TextUtils.isEmpty(nextTicketNo) ? "\\&nbsp;" : nextTicketNo;
-                                                mWebView.loadUrl("javascript:SetValue('NextCallTicket','" + n_ticket + "')");
-                                                //等待呼叫名称
-                                                String n_name = TextUtils.isEmpty(nextName) ? "\\&nbsp;" : nextName;
-                                                mWebView.loadUrl("javascript:SetValue('NextCallName','" + n_name + "')");
-                                            }
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                            LogUtils.writeLogtoFile("异常日志", Log.getStackTraceString(e));
-                                        }
-                                    }
-                                });
-                            }
                             //如果是安卓本地模板
-                            else if ("0".equals(currTemplateId)) {
+                            if ("0".equals(currTemplateId)) {
                                 //如果不是登录窗口号
                                 if (SocketUtils.COUNTER_NO != Msg.CounterNo) {
                                     return;
@@ -2413,6 +2237,104 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                     }
                                 });
                             }
+                            else if ("2".equals(currTemplateId)) {
+                                try {
+                                    //如果窗口号未在选中的集合中,跳出
+                                    if (!AppUtils.isCounterSelected(currSelectedCounterList, Msg.CounterNo)) {
+                                        return;
+                                    }
+
+                                    // simon检查是否有重复叫号
+                                    if (!AppUtils.checkHasReCall(call_info_list, Msg.TicketNo)) {
+                                        //添加数据
+                                        CallInfoEntity callInfo = new CallInfoEntity(AppUtils.formatCounterNo(Msg.CounterNo + "", counterNoLen), Msg.TicketNo, currName, consultingRoomAlias);
+                                        //添加当前叫号
+                                        call_info_list.add(0, callInfo);
+                                        //如果数据为100条，移除最早的那一条
+                                        if (call_info_list.size() == 100) {
+                                            call_info_list.remove(99);
+                                        }
+                                    }
+
+//                                    //添加数据
+//                                    CallInfoEntity callInfo = new CallInfoEntity(AppUtils.formatCounterNo(Msg.CounterNo + "", counterNoLen), Msg.TicketNo, currName, consultingRoomAlias);
+//                                    //删除重复叫号
+//                                    AppUtils.delHasReCall(call_info_list, Msg.TicketNo);
+//                                    //添加当前叫号
+//                                    call_info_list.add(0, callInfo);
+//                                    //如果数据为12条，移除最早的那一条
+//                                    if (call_info_list.size() == 12) {
+//                                        call_info_list.remove(11);
+//                                    }
+                                    //如果启用了模板
+                                    if (isEnalbeCallModel) {
+                                        //显示叫号信息
+                                        showCallInfoList();
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    LogUtils.writeLogtoFile("异常日志", Log.getStackTraceString(e));
+                                }
+                            }
+                            //如果是竖屏综合屏
+                            else if ("8".equals(currTemplateId)) {
+                                try {
+                                    //如果窗口号未在选中的集合中,跳出
+                                    if (!AppUtils.isCounterSelected(currSelectedCounterList, Msg.CounterNo)) {
+                                        return;
+                                    }
+                                    //添加数据
+                                    CallInfoEntity callInfo = new CallInfoEntity(AppUtils.formatCounterNo(Msg.CounterNo + "", counterNoLen), Msg.TicketNo, currName, consultingRoomAlias);
+                                    //删除重复叫号
+                                    AppUtils.delHasReCall(call_info_list, Msg.TicketNo);
+                                    //添加当前叫号
+                                    call_info_list.add(0, callInfo);
+                                    //如果数据为12条，移除最早的那一条
+                                    if (call_info_list.size() == 12) {
+                                        call_info_list.remove(11);
+                                    }
+                                    //如果启用了模板
+                                    if (isEnalbeCallModel) {
+                                        //显示叫号信息
+                                        //显示叫号
+                                        ShowCallInfoFor8Template(mTemplateEntity);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    LogUtils.writeLogtoFile("异常日志", Log.getStackTraceString(e));
+                                }
+
+                            }
+                            //如果是单窗口屏
+                            else{
+                                //如果不是登录窗口号
+                                if (SocketUtils.COUNTER_NO != Msg.CounterNo) {
+                                    return;
+                                }
+                                //显示叫号信息
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            //当前呼叫票号
+                                            mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + Msg.TicketNo + "')");
+                                            //当前呼叫名称
+                                            String c_name = TextUtils.isEmpty(currName) ? "\\&nbsp;" : currName;
+                                            mWebView.loadUrl("javascript:SetValue('CurrCallName','" + c_name + "')");
+                                            //等待呼叫票号
+                                            String n_ticket = TextUtils.isEmpty(nextTicketNo) ? "\\&nbsp;" : nextTicketNo;
+                                            mWebView.loadUrl("javascript:SetValue('NextCallTicket','" + n_ticket + "')");
+                                            //等待呼叫名称
+                                            String n_name = TextUtils.isEmpty(nextName) ? "\\&nbsp;" : nextName;
+                                            mWebView.loadUrl("javascript:SetValue('NextCallName','" + n_name + "')");
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                            LogUtils.writeLogtoFile("异常日志", Log.getStackTraceString(e));
+                                        }
+                                    }
+                                });
+                            }
+
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -2645,19 +2567,38 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                         isHasHeadPic = !TextUtils.isEmpty(userInfo[4]);
 
                                         //如果是模板4或模板5,才有员工信息
-                                        if ("1".equals(currTemplateId) || "3".equals(currTemplateId) || "4".equals(currTemplateId) || "5".equals(currTemplateId) || "6".equals(currTemplateId) || "7".equals(currTemplateId)) {
+                                        if ("4".equals(currTemplateId) || "5".equals(currTemplateId)) {
                                             //设置员工名称
                                             mWebView.loadUrl("javascript:SetValue('StaffName','" + staffName + "')");
                                             //设置员工工号
                                             mWebView.loadUrl("javascript:SetValue('StaffNum','" + staffId + "')");
+                                            //设置员工职称
+                                            if ("4".equals(currTemplateId) || "5".equals(currTemplateId)) {
+                                                mWebView.loadUrl("javascript:SetValue('StaffTitle','" + staffTitle + "')");
+                                            }
+                                            //如果没有头像
+                                            if (!isHasHeadPic) {
+                                                //清除头像文件
+                                                FileUtils.deleteFile(new File(headFilePath));
+                                                if ("4".equals(currTemplateId) || "5".equals(currTemplateId)) {
+                                                    //iv_head.setImageResource(R.mipmap.person);
+                                                    mWebView.loadUrl("javascript:SetValue('StaffHeadPath','StaffHorizontal1/default-head.png')");
+                                                } else if ("5".equals(currTemplateId)) {
+                                                    iv_head.setImageResource(R.mipmap.jingcha_default);
+                                                }
+                                            }
+                                        }
+                                        //如果是7号模板
+                                        else if ("7".equals(currTemplateId)) {
+                                            //设置业务员姓名
+                                            mWebView.loadUrl("javascript:SetValue('StaffName','" + staffName + "')");
                                             //设置员工职称
                                             mWebView.loadUrl("javascript:SetValue('StaffTitle','" + staffTitle + "')");
                                             //如果没有头像
                                             if (!isHasHeadPic) {
                                                 //清除头像文件
                                                 FileUtils.deleteFile(new File(headFilePath));
-                                                //iv_head.setImageResource(R.mipmap.person);
-                                                mWebView.loadUrl("javascript:SetValue('StaffHeadPath','StaffHorizontal1/default-head.png')");
+                                                iv_head.setImageResource(R.mipmap.person);
                                             }
                                         }
                                         //如果是安作自定义模板
@@ -2778,26 +2719,11 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                             public void run() {
                                 try {
                                     //如果模板1或模板4或模板5才有暂停服务
-                                    if ("1".equals(currTemplateId)
-                                            || "4".equals(currTemplateId)
-                                            || "5".equals(currTemplateId)
-                                            || "6".equals(currTemplateId)
-                                            || "7".equals(currTemplateId)
-                                            || "0".equals(currTemplateId)) {
+                                    if (!"2".equals(currTemplateId) && !"8".equals(currTemplateId)) {
                                         //暂停服务
                                         if (Msg.Arg1 == 1) {
-                                            if ("1".equals(currTemplateId) || "3".equals(currTemplateId) || "4".equals(currTemplateId) || "5".equals(currTemplateId) || "6".equals(currTemplateId) || "7".equals(currTemplateId)) {
-                                                //当前呼叫票号
-                                                mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + "暂停" + "')");
-                                                //当前呼叫名称
-                                                mWebView.loadUrl("javascript:SetValue('CurrCallName','" + "服务" + "')");
-                                                //等待呼叫票号
-                                                mWebView.loadUrl("javascript:SetValue('NextCallTicket','" + "\\&nbsp;" + "')");
-                                                //等待呼叫名称
-                                                mWebView.loadUrl("javascript:SetValue('NextCallName','" + "\\&nbsp;" + "')");
-                                            }
                                             //如果是本地模板
-                                            else if ("0".equals(currTemplateId)) {
+                                            if ("0".equals(currTemplateId)) {
                                                 //如果是本地模板1
                                                 if ("1".equals(local_template_id)) {
                                                     tv_curr_call_v1.setText("暂停服务");
@@ -2839,22 +2765,21 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                                     tv_next_call_t7.setText("");
                                                 }
                                             }
-                                        }
-                                        //取消暂停服务
-                                        else if (Msg.Arg1 == 0) {
-                                            //清除之前的叫号信息,如果1号模板或4号模板
-                                            if ("1".equals(currTemplateId) || "3".equals(currTemplateId) || "4".equals(currTemplateId) || "5".equals(currTemplateId) || "6".equals(currTemplateId) || "7".equals(currTemplateId)) {
+                                            else if (!"2".equals(currTemplateId) && !"8".equals(currTemplateId)) {
                                                 //当前呼叫票号
-                                                mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + "\\&nbsp;" + "')");
+                                                mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + "暂停" + "')");
                                                 //当前呼叫名称
-                                                mWebView.loadUrl("javascript:SetValue('CurrCallName','" + "\\&nbsp;" + "')");
+                                                mWebView.loadUrl("javascript:SetValue('CurrCallName','" + "服务" + "')");
                                                 //等待呼叫票号
                                                 mWebView.loadUrl("javascript:SetValue('NextCallTicket','" + "\\&nbsp;" + "')");
                                                 //等待呼叫名称
                                                 mWebView.loadUrl("javascript:SetValue('NextCallName','" + "\\&nbsp;" + "')");
                                             }
+                                        }
+                                        //取消暂停服务
+                                        else if (Msg.Arg1 == 0) {
                                             //如果是本地模板
-                                            else if ("0".equals(currTemplateId)) {
+                                            if ("0".equals(currTemplateId)) {
                                                 //如果是本地模板1
                                                 if ("1".equals(local_template_id)) {
                                                     tv_curr_call_v1.setText("");
@@ -2896,6 +2821,17 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                                     tv_next_call_t7.setText("");
                                                 }
                                             }
+                                            else if (!"2".equals(currTemplateId) || !"8".equals(currTemplateId)) {
+                                                //当前呼叫票号
+                                                mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + "\\&nbsp;" + "')");
+                                                //当前呼叫名称
+                                                mWebView.loadUrl("javascript:SetValue('CurrCallName','" + "\\&nbsp;" + "')");
+                                                //等待呼叫票号
+                                                mWebView.loadUrl("javascript:SetValue('NextCallTicket','" + "\\&nbsp;" + "')");
+                                                //等待呼叫名称
+                                                mWebView.loadUrl("javascript:SetValue('NextCallName','" + "\\&nbsp;" + "')");
+                                            }
+
                                         }
                                     }
                                 } catch (Exception e) {
@@ -3612,9 +3548,17 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                                 setHistoryCallModel(mTemplateEntity);
                                             }
                                         }
-
-                                        /**模板4的*/
-                                        if ("1".equals(currTemplateId) || "3".equals(currTemplateId) || "4".equals(currTemplateId) || "5".equals(currTemplateId) || "6".equals(currTemplateId) || "7".equals(currTemplateId)) {
+                                        /**如果8号模板，竖屏综合屏*/
+                                        else if ("8".equals(currTemplateId)) {
+                                            //设置标题
+                                            mWebView.loadUrl("javascript:SetValue('Title','" + mCounterEntity.getTitle() + "')");
+                                            //如果启动了叫号模板
+                                            if ("1".equals(mTemplateEntity.getCallTextModel_enable())) {
+                                                //显示叫号
+                                                ShowCallInfoFor8Template(mTemplateEntity);
+                                            }
+                                        }
+                                        else {
                                             //设置标题
                                             mWebView.loadUrl("javascript:SetValue('Title','" + mCounterEntity.getTitle() + "')");
                                             //设置业务名称
@@ -3645,17 +3589,6 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                                 headFilePath = "";
                                             }
                                             mWebView.loadUrl("javascript:SetValue('StaffHeadPath','" + headFilePath + "')");
-                                        }
-
-                                        /**如果8号模板，竖屏综合屏*/
-                                        if ("8".equals(currTemplateId)) {
-                                            //设置标题
-                                            mWebView.loadUrl("javascript:SetValue('Title','" + mCounterEntity.getTitle() + "')");
-                                            //如果启动了叫号模板
-                                            if ("1".equals(mTemplateEntity.getCallTextModel_enable())) {
-                                                //显示叫号
-                                                ShowCallInfoFor8Template(mTemplateEntity);
-                                            }
                                         }
 
                                         //如果有多媒体
@@ -5389,7 +5322,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
             public void run() {
                 try {
                     //如果是模板1或模板4
-                    if ("1".equals(currTemplateId) || "3".equals(currTemplateId) || "4".equals(currTemplateId) || "5".equals(currTemplateId) || "6".equals(currTemplateId) || "7".equals(currTemplateId)) {
+                    if (!"2".equals(currTemplateId) && !"8".equals(currTemplateId)) {
                         //设置当前票号为空
                         mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + "\\&nbsp;" + "')");
                         //设置当前票号名称为空
