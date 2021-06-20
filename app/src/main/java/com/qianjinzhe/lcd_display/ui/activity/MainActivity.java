@@ -1737,7 +1737,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                         disConnectReLogin();
                     }
                     //如果有头像,并且是模板4
-                    else if (isHasHeadPic && ("4".equals(currTemplateId) || "5".equals(currTemplateId)) || "7".equals(currTemplateId)
+                    else if (isHasHeadPic && ("4".equals(currTemplateId) || "5".equals(currTemplateId) || "7".equals(currTemplateId))
                             || ("0".equals(currTemplateId) && ("1".equals(local_template_id)
                             || "2".equals(local_template_id)
                             || "3".equals(local_template_id)
@@ -2567,40 +2567,42 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                         isHasHeadPic = !TextUtils.isEmpty(userInfo[4]);
 
                                         //如果是模板4或模板5,才有员工信息
-                                        if ("4".equals(currTemplateId) || "5".equals(currTemplateId)) {
+                                        if ("4".equals(currTemplateId) || "5".equals(currTemplateId) || "7".equals(currTemplateId)) {
                                             //设置员工名称
                                             mWebView.loadUrl("javascript:SetValue('StaffName','" + staffName + "')");
                                             //设置员工工号
                                             mWebView.loadUrl("javascript:SetValue('StaffNum','" + staffId + "')");
                                             //设置员工职称
-                                            if ("4".equals(currTemplateId) || "5".equals(currTemplateId)) {
-                                                mWebView.loadUrl("javascript:SetValue('StaffTitle','" + staffTitle + "')");
-                                            }
+                                            mWebView.loadUrl("javascript:SetValue('StaffTitle','" + staffTitle + "')");
+//                                            if ("4".equals(currTemplateId) || "5".equals(currTemplateId)) {
+//                                                mWebView.loadUrl("javascript:SetValue('StaffTitle','" + staffTitle + "')");
+//                                            }
                                             //如果没有头像
                                             if (!isHasHeadPic) {
                                                 //清除头像文件
                                                 FileUtils.deleteFile(new File(headFilePath));
-                                                if ("4".equals(currTemplateId) || "5".equals(currTemplateId)) {
-                                                    //iv_head.setImageResource(R.mipmap.person);
-                                                    mWebView.loadUrl("javascript:SetValue('StaffHeadPath','StaffHorizontal1/default-head.png')");
-                                                } else if ("5".equals(currTemplateId)) {
-                                                    iv_head.setImageResource(R.mipmap.jingcha_default);
-                                                }
+                                                mWebView.loadUrl("javascript:SetValue('StaffHeadPath','StaffHorizontal1/default-head.png')");
+//                                                if ("4".equals(currTemplateId) || "5".equals(currTemplateId)) {
+//                                                    //iv_head.setImageResource(R.mipmap.person);
+//                                                    mWebView.loadUrl("javascript:SetValue('StaffHeadPath','StaffHorizontal1/default-head.png')");
+//                                                } else if ("5".equals(currTemplateId)) {
+//                                                    iv_head.setImageResource(R.mipmap.jingcha_default);
+//                                                }
                                             }
                                         }
                                         //如果是7号模板
-                                        else if ("7".equals(currTemplateId)) {
-                                            //设置业务员姓名
-                                            mWebView.loadUrl("javascript:SetValue('StaffName','" + staffName + "')");
-                                            //设置员工职称
-                                            mWebView.loadUrl("javascript:SetValue('StaffTitle','" + staffTitle + "')");
-                                            //如果没有头像
-                                            if (!isHasHeadPic) {
-                                                //清除头像文件
-                                                FileUtils.deleteFile(new File(headFilePath));
-                                                iv_head.setImageResource(R.mipmap.person);
-                                            }
-                                        }
+//                                        else if ("7".equals(currTemplateId)) {
+//                                            //设置业务员姓名
+//                                            mWebView.loadUrl("javascript:SetValue('StaffName','" + staffName + "')");
+//                                            //设置员工职称
+//                                            mWebView.loadUrl("javascript:SetValue('StaffTitle','" + staffTitle + "')");
+//                                            //如果没有头像
+//                                            if (!isHasHeadPic) {
+//                                                //清除头像文件
+//                                                FileUtils.deleteFile(new File(headFilePath));
+//                                                iv_head.setImageResource(R.mipmap.person);
+//                                            }
+//                                        }
                                         //如果是安作自定义模板
                                         else if ("0".equals(currTemplateId)) {
                                             //如果是本地模板1
