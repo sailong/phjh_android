@@ -45,6 +45,8 @@ public class Constants {
     public static final int QQS_TVD_USERINFO = 107;
     /**服务器发送暂停服务或取消暂停服务,1暂停服务，0取消暂停服务*/
     public static final int QQS_TVD_PAUSE_SERVICE = 108;
+    /**服务器发送暂停服务或取消暂停服务,1启动网络咨询服务，0取消网络咨询服务*/
+    public static final int QQS_TVD_NETASK_SERVICE = 31;
     /**被踢下线,被强制退出*/
     public static final int QQS_TVD_FORCED_OFFLINE = 14;
 

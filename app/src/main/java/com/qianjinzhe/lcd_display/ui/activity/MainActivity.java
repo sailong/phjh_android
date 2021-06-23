@@ -2850,6 +2850,144 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
                     break;
 
+                case Constants.QQS_TVD_NETASK_SERVICE://服务器发送暂停服务或取消暂停服务消息
+                    LogUtils.d("receiveMessage", "服务器发送网络咨询服务或取消网络服务消息" + Msg.toString());
+                    LogUtils.writeLogtoFile("服务器发送网络咨询服务或取消网络服务消息", Msg.toString());
+                    try {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    //如果模板1或模板4或模板5才有暂停服务
+                                    if (!"2".equals(currTemplateId) && !"8".equals(currTemplateId)) {
+                                        //暂停服务
+                                        if (Msg.Arg1 == 1) {
+                                            //如果是本地模板
+                                            if ("0".equals(currTemplateId)) {
+                                                //如果是本地模板1
+                                                if ("1".equals(local_template_id)) {
+                                                    tv_curr_call_v1.setText("网络咨询服务");
+                                                    tv_wait_call_1_v1.setText("");
+                                                    tv_wait_call_2_v1.setText("");
+                                                }
+                                                //如果是本地模板2
+                                                else if ("2".equals(local_template_id)) {
+                                                    tv_curr_call_h1.setText("网络咨询");
+                                                    tv_next_call_h1.setText("服务");
+                                                }
+                                                //如果是本地模板3
+                                                else if ("3".equals(local_template_id)) {
+                                                    tv_curr_call_v2.setText("网络咨询服务");
+                                                    tv_wait_call_1_v2.setText("");
+                                                    tv_wait_call_2_v2.setText("");
+                                                    tv_wait_call_3_v2.setText("");
+                                                    tv_wait_call_4_v2.setText("");
+                                                }
+                                                //如果是本地模板4
+                                                else if ("4".equals(local_template_id)) {
+                                                    tv_curr_call_v3.setText("网络咨询服务");
+                                                    tv_wait_call_1_v3.setText("");
+                                                    tv_wait_call_2_v3.setText("");
+                                                }
+                                                //如果是本地模板5
+                                                else if ("5".equals(local_template_id)) {
+                                                    tv_curr_call_t5.setText("网络咨询服务");
+                                                    tv_next_call_t5.setText("");
+                                                }
+                                                //如果是本地模板6
+                                                else if ("6".equals(local_template_id)) {
+                                                    tv_curr_call_t6.setText("网络咨询服务");
+                                                    tv_next_call_t6.setText("");
+                                                }
+                                                //如果是本地模板7
+                                                else if ("7".equals(local_template_id)) {
+                                                    tv_curr_call_t7.setText("网络咨询服务");
+                                                    tv_next_call_t7.setText("");
+                                                }
+                                            }
+                                            else if (!"2".equals(currTemplateId) && !"8".equals(currTemplateId)) {
+                                                //当前呼叫票号
+                                                mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + "网络咨询" + "')");
+                                                //当前呼叫名称
+                                                mWebView.loadUrl("javascript:SetValue('CurrCallName','" + "服务" + "')");
+                                                //等待呼叫票号
+                                                mWebView.loadUrl("javascript:SetValue('NextCallTicket','" + "\\&nbsp;" + "')");
+                                                //等待呼叫名称
+                                                mWebView.loadUrl("javascript:SetValue('NextCallName','" + "\\&nbsp;" + "')");
+                                            }
+                                        }
+                                        //取消暂停服务
+                                        else if (Msg.Arg1 == 0) {
+                                            //如果是本地模板
+                                            if ("0".equals(currTemplateId)) {
+                                                //如果是本地模板1
+                                                if ("1".equals(local_template_id)) {
+                                                    tv_curr_call_v1.setText("");
+                                                    tv_wait_call_1_v1.setText("");
+                                                    tv_wait_call_2_v1.setText("");
+                                                }
+                                                //如果是本地模板2
+                                                else if ("2".equals(local_template_id)) {
+                                                    tv_curr_call_h1.setText("");
+                                                    tv_next_call_h1.setText("");
+                                                }
+                                                //如果是本地模板3
+                                                else if ("3".equals(local_template_id)) {
+                                                    tv_curr_call_v2.setText("");
+                                                    tv_wait_call_1_v2.setText("");
+                                                    tv_wait_call_2_v2.setText("");
+                                                    tv_wait_call_3_v2.setText("");
+                                                    tv_wait_call_4_v2.setText("");
+                                                }
+                                                //如果是本地模板4
+                                                else if ("4".equals(local_template_id)) {
+                                                    tv_curr_call_v2.setText("");
+                                                    tv_wait_call_1_v2.setText("");
+                                                    tv_wait_call_2_v2.setText("");
+                                                }
+                                                //如果是本地模板5
+                                                else if ("5".equals(local_template_id)) {
+                                                    tv_curr_call_t5.setText("");
+                                                    tv_next_call_t5.setText("");
+                                                }
+                                                //如果是本地模板6
+                                                else if ("6".equals(local_template_id)) {
+                                                    tv_curr_call_t6.setText("");
+                                                    tv_next_call_t6.setText("");
+                                                }
+                                                //如果是本地模板7
+                                                else if ("7".equals(local_template_id)) {
+                                                    tv_curr_call_t7.setText("");
+                                                    tv_next_call_t7.setText("");
+                                                }
+                                            }
+                                            else if (!"2".equals(currTemplateId) || !"8".equals(currTemplateId)) {
+                                                //当前呼叫票号
+                                                mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + "\\&nbsp;" + "')");
+                                                //当前呼叫名称
+                                                mWebView.loadUrl("javascript:SetValue('CurrCallName','" + "\\&nbsp;" + "')");
+                                                //等待呼叫票号
+                                                mWebView.loadUrl("javascript:SetValue('NextCallTicket','" + "\\&nbsp;" + "')");
+                                                //等待呼叫名称
+                                                mWebView.loadUrl("javascript:SetValue('NextCallName','" + "\\&nbsp;" + "')");
+                                            }
+
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    LogUtils.writeLogtoFile("异常日志", Log.getStackTraceString(e));
+                                }
+
+                            }
+                        });
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+
                 case Constants.QQS_TVD_FORCED_OFFLINE://被踢下线
                     LogUtils.writeLogtoFile("设备被强制退出", Msg.toString());
                     LogUtils.d("receiveMessage", "被强制下线" + Msg.toString());
