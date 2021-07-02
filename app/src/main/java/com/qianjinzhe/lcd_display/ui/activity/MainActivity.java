@@ -2850,7 +2850,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
 
                     break;
 
-                case Constants.QQS_TVD_NETASK_SERVICE://服务器发送暂停服务或取消暂停服务消息
+                case Constants.QQS_TVD_NETASK_SERVICE://服务器发送网络咨询服务或取消网络咨询服务消息
                     LogUtils.d("receiveMessage", "服务器发送网络咨询服务或取消网络服务消息" + Msg.toString());
                     LogUtils.writeLogtoFile("服务器发送网络咨询服务或取消网络服务消息", Msg.toString());
                     try {
@@ -2909,7 +2909,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                                 //当前呼叫票号
                                                 mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + "网络咨询" + "')");
                                                 //当前呼叫名称
-                                                mWebView.loadUrl("javascript:SetValue('CurrCallName','" + "服务" + "')");
+                                                mWebView.loadUrl("javascript:SetValue('CurrCallName','" + "\\&nbsp;" + "')");
                                                 //等待呼叫票号
                                                 mWebView.loadUrl("javascript:SetValue('NextCallTicket','" + "\\&nbsp;" + "')");
                                                 //等待呼叫名称

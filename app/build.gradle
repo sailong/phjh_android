@@ -52,6 +52,9 @@ android {
             zipAlignEnabled true
 
             applicationVariants.all { variant ->
+//                variant.outputs.all {
+//                    outputFileName = "QQSLcdDisplay_v${defaultConfig.versionName}_${releaseTime()}.apk"
+//                }
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
