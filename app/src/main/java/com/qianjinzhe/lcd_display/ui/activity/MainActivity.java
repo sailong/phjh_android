@@ -2858,10 +2858,10 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                             @Override
                             public void run() {
                                 try {
-                                    //如果模板1或模板4或模板5才有暂停服务
+                                    //如果模板1或模板4或模板5才有网络咨询服务
                                     if (!"2".equals(currTemplateId) && !"8".equals(currTemplateId)) {
-                                        //暂停服务
-                                        if (Msg.Arg1 == 1) {
+                                        //网络咨询服务
+                                        if (tv_curr_call_v1.getText() != "网络咨询") {
                                             //如果是本地模板
                                             if ("0".equals(currTemplateId)) {
                                                 //如果是本地模板1
@@ -2906,6 +2906,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                                 }
                                             }
                                             else if (!"2".equals(currTemplateId) && !"8".equals(currTemplateId)) {
+                                                tv_curr_call_v1.setText("网络咨询");
                                                 //当前呼叫票号
                                                 mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + "网络咨询" + "')");
                                                 //当前呼叫名称
@@ -2916,8 +2917,8 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                                 mWebView.loadUrl("javascript:SetValue('NextCallName','" + "\\&nbsp;" + "')");
                                             }
                                         }
-                                        //取消暂停服务
-                                        else if (Msg.Arg1 == 0) {
+                                        //取消网络咨询服务
+                                        else {
                                             //如果是本地模板
                                             if ("0".equals(currTemplateId)) {
                                                 //如果是本地模板1
@@ -2962,6 +2963,7 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                                 }
                                             }
                                             else if (!"2".equals(currTemplateId) || !"8".equals(currTemplateId)) {
+                                                tv_curr_call_v1.setText("");
                                                 //当前呼叫票号
                                                 mWebView.loadUrl("javascript:SetValue('CurrCallTicket','" + "\\&nbsp;" + "')");
                                                 //当前呼叫名称
@@ -2971,7 +2973,6 @@ public class MainActivity extends BaseActivity implements CustomMediaPlayer.OnVi
                                                 //等待呼叫名称
                                                 mWebView.loadUrl("javascript:SetValue('NextCallName','" + "\\&nbsp;" + "')");
                                             }
-
                                         }
                                     }
                                 } catch (Exception e) {
